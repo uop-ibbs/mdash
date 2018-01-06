@@ -36,4 +36,4 @@ if (BUILD_GUI)
     add_subdirectory(src/wxfreechart/src)
 endif()
 
-install(FILES README.md BUILD.md INSTALL.md LICENSE DESTINATION ${DOC_INSTALL_DIR})
+install(FILES README.md INSTALL.md LICENSE DESTINATION ${DOC_INSTALL_DIR})

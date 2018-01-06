@@ -234,7 +234,7 @@ install-program: $(PROGRAM) $(srcdir)/$(AMBERDASH)
 	$(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) $^ $(DESTDIR)$(bindir)
 
-install-doc: $(top_srcdir)/README.md $(top_srcdir)/BUILD.md $(top_srcdir)/INSTALL.md $(top_srcdir)/LICENSE $(srcdir)/mdash.pdf $(srcdir)/mdash.html
+install-doc: $(top_srcdir)/README.md $(top_srcdir)/INSTALL.md $(top_srcdir)/LICENSE $(srcdir)/mdash.pdf $(srcdir)/mdash.html
 	$(MKDIR_P) $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) $^ $(DESTDIR)$(docdir)
 
@@ -256,7 +256,7 @@ uninstall-program:
 	-rm -f $(DESTDIR)$(bindir)/$(AMBERDASH)
 
 uninstall-doc:
-	-rm -f $(DESTDIR)$(docdir)/README.md $(DESTDIR)$(docdir)/BUILD.md $(DESTDIR)$(docdir)/INSTALL.md $(DESTDIR)$(docdir)/LICENSE $(DESTDIR)$(docdir)/mdash.pdf $(DESTDIR)$(docdir)/mdash.html
+	-rm -f $(DESTDIR)$(docdir)/README.md $(DESTDIR)$(docdir)/INSTALL.md $(DESTDIR)$(docdir)/LICENSE $(DESTDIR)$(docdir)/mdash.pdf $(DESTDIR)$(docdir)/mdash.html
 	-[ -d $(DESTDIR)$(docdir) ] && rmdir $(DESTDIR)$(docdir)
 
 uninstall-info:
