@@ -1,0 +1,31 @@
+#PhiPsi2
+dihedral phi2 :1@C :2@N :2@CA :2@C
+dihedral psi2 :2@N :2@CA :2@C :3@N
+
+#PhiPsi3
+dihedral phi3 :2@C :3@N :3@CA :3@C
+dihedral psi3 :3@N :3@CA :3@C :4@N
+
+#PhiPsi4
+dihedral phi4 :3@C :4@N :4@CA :4@C
+dihedral psi4 :4@N :4@CA :4@C :5@N
+
+#PhiPsi5
+dihedral phi5 :4@C :5@N :5@CA :5@C
+dihedral psi5 :5@N :5@CA :5@C :6@N
+
+#PhiPsi6
+dihedral phi6 :5@C :6@N :6@CA :6@C
+dihedral psi6 :6@N :6@CA :6@C :7@N
+
+#PhiPsi7
+dihedral phi7 :6@C :7@N :7@CA :7@C
+dihedral psi7 :7@N :7@CA :7@C :8@N
+
+#PhiPsi8
+dihedral phi8 :7@C :8@N :8@CA :8@C
+dihedral psi8 :8@N :8@CA :8@C :9@N
+
+#PhiPsi9
+dihedral phi9 :8@C :9@N :9@CA :9@C
+dihedral psi9 :9@N :9@CA :9@C :10@N

@@ -1,0 +1,13 @@
+# $Id: Makefile.in 124 2017-10-23 13:55:21Z dw $
+#
+# Dash Test Makefile
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+
+check:
+	${srcdir}/test.sh -mdash ${top_builddir}/src/dash/mdash -inputs ${top_srcdir}/examples -expected ${srcdir} @BUILD_AMBER@-amber
+
+clean:
+	-rm -f *.out *.diff

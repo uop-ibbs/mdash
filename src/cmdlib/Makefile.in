@@ -1,0 +1,83 @@
+# $Id: Makefile.in 99 2017-03-07 10:46:58Z dw $
+#
+# Makefile for cmdlib c++ library
+#
+
+LIB = libcmd.a
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+
+vpath %.cpp $(srcdir)
+
+CXX      = @CXX@
+DEPFLAGS = @DEPFLAGS@
+CPPFLAGS = @CPPFLAGS@
+CXXFLAGS = @CXXFLAGS@
+
+CXX_STD      = @CXX_STD@
+CXX_WARNINGS = @CXX_WARNINGS@
+CXX_PEDANTIC = @CXX_PEDANTIC@
+CXX_OPTIMIZE = @CXX_OPTIMIZE@
+
+CMDLIB_INCLUDES = -I$(top_srcdir)/src
+EIGEN_INCLUDES  = @EIGEN_INCLUDES@
+
+CPPFLAGS += $(CXX_STD) $(CMDLIB_INCLUDES) $(EIGEN_INCLUDES)
+CXXFLAGS += $(CXX_STD) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(CXX_OPTIMIZE) $(CMDLIB_INCLUDES) $(EIGEN_INCLUDES)
+
+COMPILE = $(CXX) $(CXXFLAGS)
+
+AR      = ar
+ARFLAGS = crsv
+
+HEADERS = \
+	cmdlib.h \
+	eigen_assert.h \
+	exception.h \
+	pca.h
+
+SOURCES = \
+	exception.cpp \
+	pca.cpp
+
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPENDS = $(SOURCES:.cpp=.d)
+
+all: $(LIB)
+
+$(LIB): $(OBJECTS)
+	$(AR) $(ARFLAGS) $@ $^
+
+# distribution
+DIST_FILES = $(addprefix $(srcdir)/, $(HEADERS) $(SOURCES) Makefile.in CMakeLists.txt)
+
+dist: $(DIST_FILES)
+	mkdir -p $(top_builddir)/$(DIST_NAME)/src/cmdlib
+	ln $(DIST_FILES) $(top_builddir)/$(DIST_NAME)/src/cmdlib
+
+clean:
+	-rm -f $(LIB) $(OBJECTS) $(DEPENDS) *~
+
+distclean: clean
+	-rm -f Makefile
+
+# compilation
+.SUFFIXES:
+.SUFFIXES: .cpp .o
+
+.cpp.o:
+	$(COMPILE) -o $@ -c $<
+
+# dependencies
+ifneq ($(MAKECMDGOALS),clean)
+  -include $(DEPENDS)
+endif
+
+%.d: %.cpp
+	$(CXX) $(DEPFLAGS) $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+.PHONY: all clean distclean

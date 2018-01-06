@@ -1,0 +1,74 @@
+# $Id: Makefile.in 134 2017-12-19 17:18:22Z dw $
+#
+# Dash Toplevel Makefile
+
+PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+all: dash
+
+@BUILD_GUI_TRUE@dash: cmdlib wxfreechartlib
+@BUILD_GUI_FALSE@dash: cmdlib
+	$(MAKE) -C src/dash
+
+cmdlib:
+	$(MAKE) -C src/cmdlib
+
+wxfreechartlib:
+	$(MAKE) -C src/wxfreechart/src
+
+# up-to-date docs are generated in srcdir before distribution,
+# so users shouldn't normally need or use this target
+doc:
+	$(MAKE) -C src/dash doc
+
+install:
+	$(MAKE) -C src/dash $@
+	$(MAKE) -C examples $@
+
+uninstall:
+	$(MAKE) -C examples $@
+	$(MAKE) -C src/dash $@
+
+check: dash
+	$(MAKE) -C test $@
+
+export DIST_NAME = $(PACKAGE_TARNAME)-$(PACKAGE_VERSION)
+DIST_TARBALL = $(DIST_NAME).tar.bz2
+DIST_ZIPFILE = $(DIST_NAME).zip
+DIST_FILES = $(addprefix $(srcdir)/, README.md INSTALL.md LICENSE configure Makefile.in install-sh config.sub config.guess cmake.bat CMakeLists.txt)
+
+dist: $(DIST_FILES)
+	rm -rf $(DIST_NAME) $(DIST_TARBALL)
+	mkdir $(DIST_NAME)
+	ln $(DIST_FILES) $(DIST_NAME)
+	$(MAKE) -C src/dash $@
+	$(MAKE) -C src/cmdlib $@
+	$(MAKE) -C src/wxfreechart/src $@
+	cp -a $(srcdir)/examples $(DIST_NAME)
+	cp -a $(srcdir)/test $(DIST_NAME)
+	cp -a $(srcdir)/cmake $(DIST_NAME)
+	tar -cvjf $(DIST_TARBALL) $(DIST_NAME)
+	zip -r $(DIST_ZIPFILE) $(DIST_NAME)
+
+clean:
+	-rm -f *~
+	$(MAKE) -C src/dash $@
+	$(MAKE) -C src/cmdlib $@
+	$(MAKE) -C src/wxfreechart/src $@
+	$(MAKE) -C test $@
+
+distclean: clean
+	-rm -f config.log config.status Makefile src/dash/Makefile src/cmdlib/Makefile src/wxfreechart/src/Makefile examples/Makefile test/Makefile
+	-rm -rf $(DIST_NAME) $(DIST_TARBALL) $(DIST_ZIPFILE)
+
+doc-clean:
+	$(MAKE) -C src/dash $@
+
+maintainer-clean: distclean
+	-rm -rf autom4te.cache configure
+
+.PHONY: all dash cmdlib wxfreechartlib doc install uninstall check test dist clean distclean doc-clean maintainer-clean

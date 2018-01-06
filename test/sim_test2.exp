@@ -1,0 +1,11 @@
+reading file hUII_test1.exp... found 10 torsion angles
+reading COMBINED_STATE_MEANS block ... found 24 states
+reading SMOOTHED_STATE_MEANS block ... found 12 states
+reading DASH_STATE_MEANS block ... found 12 states
+
+reading file tzd_test2.exp... found 8 torsion angles
+reading COMBINED_STATE_MEANS block ... found 82 states
+reading SMOOTHED_STATE_MEANS block ... found 55 states
+reading DASH_STATE_MEANS block ... found 55 states
+
+Can't compare states with different numbers of angles

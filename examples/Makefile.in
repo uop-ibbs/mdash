@@ -1,0 +1,34 @@
+# $Id: Makefile.in 124 2017-10-23 13:55:21Z dw $
+#
+# Dash Examples Makefile
+#
+
+PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+
+srcdir       = @srcdir@
+top_srcdir   = @top_srcdir@
+top_builddir = @top_builddir@
+
+prefix       = @prefix@
+exec_prefix  = @exec_prefix@
+datarootdir  = @datarootdir@
+docdir       = @docdir@
+
+MKDIR_P      = @MKDIR_P@
+INSTALL      = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+
+EXAMPLES = \
+	avp.nc  avp.out  avp.parm7  avp.tor \
+	hUII.in  hUII.out \
+	repex.in.bz2  repex.out \
+	tzd.in.gz  tzd.out
+
+install: $(addprefix $(srcdir)/, $(EXAMPLES))
+	$(MKDIR_P) $(DESTDIR)$(docdir)/examples
+	$(INSTALL_DATA) $^ $(DESTDIR)$(docdir)/examples
+
+uninstall:
+	-(cd $(DESTDIR)$(docdir)/examples && rm -f $(EXAMPLES))
+	-([ -d $(DESTDIR)$(docdir)/examples ] && rmdir $(DESTDIR)$(docdir)/examples)

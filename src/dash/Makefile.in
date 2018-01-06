@@ -1,0 +1,311 @@
+# $Id: Makefile.in 132 2017-12-19 15:01:25Z dw $
+#
+# Dash Makefile
+
+PROGRAM = mdash
+
+PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
+
+srcdir       = @srcdir@
+top_srcdir   = @top_srcdir@
+top_builddir = @top_builddir@
+
+vpath %.cpp  $(srcdir)
+
+prefix      = @prefix@
+exec_prefix = @exec_prefix@
+bindir      = @bindir@
+datarootdir = @datarootdir@
+docdir      = @docdir@
+infodir     = @infodir@
+man1dir     = @mandir@/man1
+
+MKDIR_P         = @MKDIR_P@
+INSTALL         = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA    = @INSTALL_DATA@
+
+CXX      = @CXX@
+DEPFLAGS = @DEPFLAGS@
+CPPFLAGS = @CPPFLAGS@
+CXXFLAGS = @CXXFLAGS@
+
+LDFLAGS    = @LDFLAGS@
+EXTRA_LIBS = @LIBS@
+
+CXX_STD      = @CXX_STD@
+CXX_WARNINGS = @CXX_WARNINGS@
+CXX_PEDANTIC = @CXX_PEDANTIC@
+CXX_OPTIMIZE = @CXX_OPTIMIZE@
+CXX_SECURITY = @CXX_SECURITY@
+
+DASH_INCLUDES = -I$(top_srcdir)/src
+
+CMDLIB_LIB = $(top_builddir)/src/cmdlib/libcmd.a
+
+AMBER_DEFINES = @AMBER_DEFINES@
+
+BOOST_INCLUDES = @BOOST_INCLUDES@
+BOOST_LDFLAGS  = @BOOST_LDFLAGS@
+BOOST_LIBS     = @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_SYSTEM_LIB@ @BOOST_REGEX_LIB@ @BOOST_IOSTREAMS_LIB@
+BOOST_WARNINGS = @BOOST_WARNINGS@
+
+EIGEN_INCLUDES = @EIGEN_INCLUDES@
+
+@BUILD_GUI_TRUE@WXFREECHART_INCLUDES = -I$(top_srcdir)/src/wxfreechart/include
+@BUILD_GUI_TRUE@WXFREECHART_LIB      = $(top_builddir)/src/wxfreechart/src/libwxfreechart.a
+
+@BUILD_GUI_TRUE@WX_CPPFLAGS = @WX_CPPFLAGS@
+@BUILD_GUI_TRUE@WX_CXXFLAGS = @WX_CXXFLAGS@
+@BUILD_GUI_TRUE@WX_LIBS     = @WX_LIBS@
+
+@BUILD_GUI_TRUE@GLEW_CFLAGS = @GLEW_CFLAGS@
+@BUILD_GUI_TRUE@GLU_CFLAGS  = @GLU_CFLAGS@
+@BUILD_GUI_TRUE@GL_CFLAGS   = @GL_CFLAGS@
+
+# remove duplicate opengl cflags
+@BUILD_GUI_TRUE@OPENGL_CFLAGS = $(sort $(GLEW_CFLAGS) $(GLU_CFLAGS) $(GL_CFLAGS))
+
+@BUILD_GUI_TRUE@GLM_INCLUDES = @GLM_INCLUDES@
+
+@BUILD_GUI_TRUE@GLEW_LIBS    = @GLEW_LIBS@
+@BUILD_GUI_TRUE@GLU_LIBS     = @GLU_LIBS@
+@BUILD_GUI_TRUE@GL_LIBS      = @GL_LIBS@
+
+# remove duplicate opengl libs, retaining order
+@BUILD_GUI_TRUE@GLEW_ONLY_LIBS = $(filter-out $(GL_LIBS), $(filter-out $(GLU_LIBS), $(GLEW_LIBS)))
+@BUILD_GUI_TRUE@GLU_ONLY_LIBS  = $(filter-out $(GL_LIBS), $(GLU_LIBS))
+@BUILD_GUI_TRUE@OPENGL_LIBS    = $(GLEW_ONLY_LIBS) $(GLU_ONLY_LIBS) $(GL_LIBS)
+
+@BUILD_GUI_TRUE@CPPFLAGS += $(CXX_STD) $(AMBER_DEFINES) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES) $(WXFREECHART_INCLUDES) $(WX_CPPFLAGS) $(OPENGL_CFLAGS) $(GLM_INCLUDES)
+@BUILD_GUI_TRUE@CXXFLAGS += $(CXX_STD) $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(CXX_SECURITY) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES) $(WXFREECHART_INCLUDES) $(WX_CXXFLAGS) $(OPENGL_CFLAGS) $(GLM_INCLUDES)
+@BUILD_GUI_TRUE@LIBS     += $(BOOST_LIBS) $(CMDLIB_LIB) $(WXFREECHART_LIB) $(WX_LIBS) $(OPENGL_LIBS) $(EXTRA_LIBS)
+
+@BUILD_GUI_FALSE@CPPFLAGS += $(CXX_STD) -DNOGUI $(AMBER_DEFINES) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES)
+@BUILD_GUI_FALSE@CXXFLAGS += $(CXX_STD) -DNOGUI $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES)
+@BUILD_GUI_FALSE@LIBS     += $(BOOST_LIBS) $(CMDLIB_LIB) -lpthread $(EXTRA_LIBS)
+
+LDFLAGS  += $(BOOST_LDFLAGS)
+
+COMPILE = $(CXX) $(CXXFLAGS)
+
+COMMON_HEADERS = \
+	circular.h \
+	dash.h \
+	dash_cli.h \
+	dash_exception.h \
+	dash_options.h \
+	dash_sim.h \
+	eigen.h \
+	state.h \
+	state_trajectory.h \
+	torsion_data.h \
+	trajectory.h \
+	version.h
+
+COMMON_SOURCES = \
+	circular.cpp \
+	dash.cpp \
+	dash_cli.cpp \
+	dash_exception.cpp \
+	dash_options.cpp \
+	dash_sim.cpp \
+	state_trajectory.cpp \
+	torsion_data.cpp \
+	trajectory.cpp
+
+CLI_SOURCES = \
+	main.cpp
+
+GUI_HEADERS = \
+	bout_panel.h \
+	dash_app.h \
+	dash_fbgui.h \
+	dash_gui.h \
+	dash_options_dialog.h \
+	dash_state_panel.h \
+	frequency_panel.h \
+	grid_options_dialog.h \
+	histogram.h \
+	log.h \
+	manual_gui.h \
+	mdash_html.h \
+	palette.h \
+	pca_legend.h \
+	pca_options_dialog.h \
+	pca_panel.h \
+	plot_canvas_2d.h \
+	plot_canvas_3d.h \
+	repex_state_panel.h \
+	scree_plot_panel.h \
+	similarity_panel.h \
+	summary_panel.h \
+	tiled_pager_panel_fbui.h \
+	tiled_pager_panel.h \
+	torsion_histogram_panel.h \
+	torsion_state_panel.h \
+	trackball_canvas.h \
+	trajectory_options_dialog.h \
+	trajectory_panel.h \
+	viewer_gui.h \
+	viewer_options.h
+
+GUI_SOURCES = \
+	bout_panel.cpp \
+	dash_app.cpp \
+	dash_fbgui.cpp \
+	dash_gui.cpp \
+	dash_options_dialog.cpp \
+	dash_state_panel.cpp \
+	frequency_panel.cpp \
+	histogram.cpp \
+	log.cpp \
+	manual_gui.cpp \
+	pca_legend.cpp \
+	pca_options_dialog.cpp \
+	pca_panel.cpp \
+	plot_canvas_2d.cpp \
+	plot_canvas_3d.cpp \
+	repex_state_panel.cpp \
+	scree_plot_panel.cpp \
+	similarity_panel.cpp \
+	summary_panel.cpp \
+	tiled_pager_panel.cpp \
+	tiled_pager_panel_fbui.cpp \
+	torsion_histogram_panel.cpp \
+	torsion_state_panel.cpp \
+	trackball_canvas.cpp \
+	trajectory_options_dialog.cpp \
+	trajectory_panel.cpp \
+	viewer_gui.cpp \
+	viewer_options.cpp
+
+AMBER_HEADERS = \
+	amber_dialog.h \
+	amber_options.h \
+	amber_trajectory_reader.h \
+	external.h
+
+AMBER_SOURCES = \
+	amber_options.cpp \
+	amber_trajectory_reader.cpp \
+	external.cpp
+
+AMBER_GUI_SOURCES = \
+	amber_dialog.cpp
+
+@BUILD_GUI_TRUE@SOURCES = $(COMMON_SOURCES) $(GUI_SOURCES)
+@BUILD_GUI_FALSE@SOURCES = $(COMMON_SOURCES) $(CLI_SOURCES)
+@BUILD_GUI_TRUE@@BUILD_AMBER@SOURCES += $(AMBER_GUI_SOURCES)
+@BUILD_AMBER@SOURCES += $(AMBER_SOURCES)
+
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPENDS = $(subst .cpp,.d,$(SOURCES))
+
+all: $(PROGRAM)
+
+$(PROGRAM): $(OBJECTS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
+
+# up-to-date docs are generated in srcdir before distribution,
+# so users shouldn't normally need or use this target
+doc: $(srcdir)/mdash.info $(srcdir)/mdash.pdf $(srcdir)/mdash.html $(srcdir)/mdash_html.h
+
+$(srcdir)/mdash.info: $(srcdir)/mdash.texi
+	(cd $(srcdir) && makeinfo mdash.texi)
+
+$(srcdir)/mdash.pdf: $(srcdir)/mdash.texi
+	(cd $(srcdir) && texi2pdf mdash.texi)
+	-(cd $(srcdir) && rm -f mdash.vr mdash.tp mdash.pg mdash.ky mdash.fn mdash.cp mdash.toc mdash.aux mdash.log)
+
+$(srcdir)/mdash.html: $(srcdir)/mdash.texi
+	(cd $(srcdir) && makeinfo --html --no-split mdash.texi)
+
+# create hexdump of html manual as C string in header file
+$(srcdir)/mdash_html.h: $(srcdir)/mdash.html
+	(cd $(srcdir) && xxd -i mdash.html mdash_html.h)
+
+AMBERDASH = amberdash
+
+install: install-program install-doc install-info install-man
+
+install-program: $(PROGRAM) $(srcdir)/$(AMBERDASH)
+	$(MKDIR_P) $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) $^ $(DESTDIR)$(bindir)
+
+install-doc: $(top_srcdir)/README.md $(top_srcdir)/BUILD.md $(top_srcdir)/INSTALL.md $(top_srcdir)/LICENSE $(srcdir)/mdash.pdf $(srcdir)/mdash.html
+	$(MKDIR_P) $(DESTDIR)$(docdir)
+	$(INSTALL_DATA) $^ $(DESTDIR)$(docdir)
+
+install-info: $(srcdir)/mdash.info
+	$(MKDIR_P) $(DESTDIR)$(infodir)
+	$(INSTALL_DATA) $(srcdir)/mdash.info $(DESTDIR)$(infodir)/mdash.info
+	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
+	    install-info --dir-file=$(DESTDIR)$(infodir)/dir $(DESTDIR)$(infodir)/mdash.info; \
+	else true; fi
+
+install-man: $(srcdir)/mdash.1 $(srcdir)/amberdash.1
+	$(MKDIR_P) $(DESTDIR)$(man1dir)
+	$(INSTALL_DATA) $^ $(DESTDIR)$(man1dir)
+
+uninstall: uninstall-program uninstall-doc uninstall-info uninstall-man
+
+uninstall-program:
+	-rm -f $(DESTDIR)$(bindir)/$(PROGRAM)
+	-rm -f $(DESTDIR)$(bindir)/$(AMBERDASH)
+
+uninstall-doc:
+	-rm -f $(DESTDIR)$(docdir)/README.md $(DESTDIR)$(docdir)/BUILD.md $(DESTDIR)$(docdir)/INSTALL.md $(DESTDIR)$(docdir)/LICENSE $(DESTDIR)$(docdir)/mdash.pdf $(DESTDIR)$(docdir)/mdash.html
+	-[ -d $(DESTDIR)$(docdir) ] && rmdir $(DESTDIR)$(docdir)
+
+uninstall-info:
+	if [ -f $(DESTDIR)$(infodir)/mdash.info ] && $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
+	    install-info --remove --dir-file=$(DESTDIR)$(infodir)/dir $(DESTDIR)$(infodir)/mdash.info; \
+	else true; fi
+	-rm -f $(DESTDIR)$(infodir)/mdash.info
+
+uninstall-man:
+	-rm -f $(DESTDIR)$(man1dir)/mdash.1
+	-rm -f $(DESTDIR)$(man1dir)/amberdash.1
+
+# distribution
+DIST_HEADERS = $(COMMON_HEADERS) $(GUI_HEADERS) $(AMBER_HEADERS)
+DIST_SOURCES = $(COMMON_SOURCES) $(CLI_SOURCES) $(GUI_SOURCES) $(AMBER_SOURCES) $(AMBER_GUI_SOURCES) $(AMBERDASH)
+DIST_DOCS = mdash.texi mdash.info mdash.pdf mdash.html mdash.1 amberdash.1
+DIST_EXTRA = Makefile.in CMakeLists.txt dash_icon.xpm dash.fbp tiled_pager_panel.fbp
+DIST_FILES = $(addprefix $(srcdir)/, $(DIST_HEADERS) $(DIST_SOURCES) $(DIST_DOCS) $(DIST_EXTRA))
+
+dist: $(DIST_FILES)
+	$(MKDIR_P) $(top_builddir)/$(DIST_NAME)/src/dash
+	ln $(DIST_FILES) $(top_builddir)/$(DIST_NAME)/src/dash
+
+clean:
+	-rm -f $(PROGRAM) $(OBJECTS) $(DEPENDS) *~
+
+distclean: clean
+	-rm -f Makefile
+
+doc-clean:
+	-rm -f $(srcdir)/mdash.info $(srcdir)/mdash.pdf $(srcdir)/mdash.html $(srcdir)/mdash_html.h
+
+# compilation
+.SUFFIXES:
+.SUFFIXES: .cpp .o
+
+.cpp.o:
+	$(COMPILE) -c $<
+
+# dependencies
+ifneq ($(MAKECMDGOALS),clean)
+  ifneq ($(MAKECMDGOALS),dist)
+    -include $(DEPENDS)
+  endif
+endif
+
+%.d: %.cpp
+	$(CXX) $(DEPFLAGS) $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+.PHONY: all doc install install-program install-doc install-info uninstall uninstall-program uninstall-doc uninstall-info dist clean distclean

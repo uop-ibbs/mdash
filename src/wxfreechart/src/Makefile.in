@@ -1,0 +1,189 @@
+# $Id: Makefile.in 99 2017-03-07 10:46:58Z dw $
+#
+# Makefile for wxFreeChart library
+#
+
+LIB = libwxfreechart.a
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+abs_top_builddir = @abs_top_builddir@
+
+vpath %.cpp $(srcdir)
+
+CXX      = @CXX@
+DEPFLAGS = @DEPFLAGS@
+CPPFLAGS = @CPPFLAGS@
+CXXFLAGS = @CXXFLAGS@
+
+CXX_STD      = @CXX_STD@
+CXX_WARNINGS = @CXX_WARNINGS@
+CXX_OPTIMIZE = @CXX_OPTIMIZE@
+
+WX_CPPFLAGS = @WX_CPPFLAGS@
+WX_CXXFLAGS = @WX_CXXFLAGS@
+
+INCLUDES = -I$(top_srcdir)/src/wxfreechart/include
+
+CPPFLAGS += $(CXX_STD) $(INCLUDES) $(WX_CPPFLAGS)
+CXXFLAGS += $(CXX_STD) $(CXX_WARNINGS) $(CXX_OPTIMIZE) $(INCLUDES) $(WX_CXXFLAGS)
+
+COMPILE = $(CXX) $(CXXFLAGS)
+
+AR      = ar
+ARFLAGS = crsv
+
+HEADERS = \
+	wx/wxfreechartdefs.h \
+	wx/marker.h \
+	wx/legend.h \
+	wx/art.h \
+	wx/symbol.h \
+	wx/drawobject.h \
+	wx/refobject.h \
+	wx/colorscheme.h \
+	wx/category/categorydataset.h \
+	wx/category/categorysimpledataset.h \
+	wx/bars/barplot.h \
+	wx/bars/barrenderer.h \
+	wx/axisplot.h \
+	wx/drawutils.h \
+	wx/xy/xyarearenderer.h \
+	wx/xy/xyhistorenderer.h \
+	wx/xy/xydataset.h \
+	wx/xy/vectordataset.h \
+	wx/xy/xysimpledataset.h \
+	wx/xy/xyplot.h \
+	wx/xy/xyrenderer.h \
+	wx/xy/xylinerenderer.h \
+	wx/xy/functions/sinefunction.h \
+	wx/xy/functions/polynom.h \
+	wx/xy/xydynamicdataset.h \
+	wx/chart.h \
+	wx/axis/labelaxis.h \
+	wx/axis/numberaxis.h \
+	wx/axis/compdateaxis.h \
+	wx/axis/categoryaxis.h \
+	wx/axis/axis.h \
+	wx/axis/dateaxis.h \
+	wx/axis/logarithmicnumberaxis.h  \
+	wx/dataset.h \
+	wx/chartpanel.h \
+	wx/multiplot.h \
+	wx/chartrenderer.h \
+	wx/xyz/xyzrenderer.h \
+	wx/xyz/bubbleplot.h \
+	wx/xyz/xyzdataset.h \
+	wx/chartsplitpanel.h \
+	wx/ohlc/ohlcbarrenderer.h \
+	wx/ohlc/ohlcplot.h \
+	wx/ohlc/ohlccandlestickrenderer.h\
+	wx/ohlc/ohlcrenderer.h \
+	wx/ohlc/ohlcdataset.h \
+	wx/gantt/ganttdataset.h \
+	wx/gantt/ganttsimpledataset.h \
+	wx/gantt/ganttplot.h \
+	wx/gantt/ganttrenderer.h \
+	wx/areadraw.h \
+	wx/plot.h \
+	wx/observable.h \
+	wx/pie/pieplot.h
+
+SOURCES = \
+	areadraw.cpp \
+	art.cpp \
+	axisplot.cpp \
+	chart.cpp \
+	chartpanel.cpp \
+	chartsplitpanel.cpp \
+	colorscheme.cpp \
+	dataset.cpp \
+	legend.cpp \
+	marker.cpp \
+	multiplot.cpp \
+	plot.cpp \
+	renderer.cpp \
+	symbol.cpp \
+	axis/axis.cpp \
+	axis/categoryaxis.cpp \
+	axis/compdateaxis.cpp \
+	axis/dateaxis.cpp \
+	axis/labelaxis.cpp \
+	axis/logarithmicnumberaxis.cpp \
+	axis/numberaxis.cpp \
+	bars/barplot.cpp \
+	bars/barrenderer.cpp \
+	category/categorydataset.cpp \
+	category/categorysimpledataset.cpp \
+	gantt/ganttdataset.cpp \
+	gantt/ganttplot.cpp \
+	gantt/ganttrenderer.cpp \
+	gantt/ganttsimpledataset.cpp \
+	ohlc/ohlcbarrenderer.cpp \
+	ohlc/ohlccandlestickrenderer.cpp \
+	ohlc/ohlcdataset.cpp \
+	ohlc/ohlcplot.cpp \
+	ohlc/ohlcrenderer.cpp \
+	pie/pieplot.cpp \
+	xy/vectordataset.cpp \
+	xy/xyarearenderer.cpp \
+	xy/xydataset.cpp \
+	xy/xydynamicdataset.cpp \
+	xy/xyhistorenderer.cpp \
+	xy/xylinerenderer.cpp \
+	xy/xyplot.cpp \
+	xy/xyrenderer.cpp \
+	xy/xysimpledataset.cpp \
+	xy/functions/polynom.cpp \
+	xy/functions/sinefunction.cpp \
+	xyz/bubbleplot.cpp \
+	xyz/xyzdataset.cpp \
+	xyz/xyzrenderer.cpp
+
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPENDS = $(subst .cpp,.d,$(SOURCES))
+
+all: $(LIB)
+
+$(LIB): $(OBJECTS)
+	$(AR) $(ARFLAGS) $@ $^
+
+# distribution
+DIST_FILES = $(SOURCES) $(srcdir)/Makefile.in $(srcdir)/CMakeLists.txt
+
+dist: $(DIST_FILES)
+	mkdir -p $(top_builddir)/$(DIST_NAME)/src/wxfreechart/src
+	mkdir -p $(top_builddir)/$(DIST_NAME)/src/wxfreechart/include
+	cd $(top_srcdir)/src/wxfreechart/include && cp -p --parents $(HEADERS) $(abs_top_builddir)/$(DIST_NAME)/src/wxfreechart/include
+	cd $(srcdir) && cp -p --parents $(SOURCES) Makefile.in CMakeLists.txt $(abs_top_builddir)/$(DIST_NAME)/src/wxfreechart/src
+
+clean:
+	-rm -f $(LIB) $(OBJECTS) $(DEPENDS) *~
+
+distclean: clean
+	-rm -f Makefile
+
+# compilation
+.SUFFIXES:
+.SUFFIXES: .cpp .o
+
+.cpp.o:
+	$(COMPILE) -o $@ -c $<
+
+# dependencies
+ifneq ($(MAKECMDGOALS),clean)
+  ifneq ($(MAKECMDGOALS),dist)
+    # create subdirs for out-of-tree builds
+    MKDIRS := $(shell [ -d axis ] || mkdir -p axis bars category gantt ohlc pie xy/functions xyz)
+
+    -include $(DEPENDS)
+  endif
+endif
+
+%.d: %.cpp
+	$(CXX) $(DEPFLAGS) $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+.PHONY: all dist clean distclean
