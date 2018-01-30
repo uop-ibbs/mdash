@@ -21,13 +21,14 @@ and binary packages
 The file `SHA256SUMS` contains the SHA256 checksums for each file.
 
 The files are signed with the
-[GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc)
+[GPG public key](https://github.com/uop-ibbs/mdash/raw/master/pubkey.asc)
 with fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.
 The signatures are in the files with .asc extensions.
 
-To verify a signature, first import the public key:
+To verify a signature, first download and import the public key:
 
-    gpg --import https://github.com/uop-ibbs/mdash/master/pubkey.asc
+    wget https://github.com/uop-ibbs/mdash/raw/master/pubkey.asc
+    gpg --import pubkey.asc
 
 then use the command:
 
@@ -57,7 +58,7 @@ To install a GNU/Linux binary package use the appropriate command
 On Windows simply run mdash-x.y.z.exe.
 
 The binary packages install under `/usr` on GNU/Linux and `C:\Program
-Files (x86)\mdash-x.y.z on Windows.
+Files (x86)\Mdash` on Windows.
 
 
 Extracting the source code
