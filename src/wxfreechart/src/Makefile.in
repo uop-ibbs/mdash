@@ -150,13 +150,15 @@ $(LIB): $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
 
 # distribution
-DIST_FILES = $(SOURCES) $(srcdir)/Makefile.in $(srcdir)/CMakeLists.txt
+DIST_FILES = $(SOURCES) $(srcdir)/Makefile.in $(srcdir)/CMakeLists.txt \
+             $(top_srcdir)/src/wxfreechart/license.txt $(top_srcdir)/src/wxfreechart/ReadMe.txt
 
 dist: $(DIST_FILES)
 	mkdir -p $(top_builddir)/$(DIST_NAME)/src/wxfreechart/src
 	mkdir -p $(top_builddir)/$(DIST_NAME)/src/wxfreechart/include
 	cd $(top_srcdir)/src/wxfreechart/include && cp -p --parents $(HEADERS) $(abs_top_builddir)/$(DIST_NAME)/src/wxfreechart/include
 	cd $(srcdir) && cp -p --parents $(SOURCES) Makefile.in CMakeLists.txt $(abs_top_builddir)/$(DIST_NAME)/src/wxfreechart/src
+	cd $(top_srcdir)/src/wxfreechart && cp -p license.txt ReadMe.txt $(abs_top_builddir)/$(DIST_NAME)/src/wxfreechart
 
 clean:
 	-rm -f $(LIB) $(OBJECTS) $(DEPENDS) *~
