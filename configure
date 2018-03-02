@@ -6816,7 +6816,7 @@ fi
 $as_echo_n "checking for EIGEN version 3.2.1 or later... " >&6; }
 
 save_CXXFLAGS="$CXXFLAGS"
-CXXFLAGS="$EIGEN_CFLAGS"
+CXXFLAGS="$EIGEN_INCLUDES"
 
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */

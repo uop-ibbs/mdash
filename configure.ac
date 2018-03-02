@@ -119,7 +119,7 @@ dnl Eigen 3.2.0 (supplied with Ubuntu 14.04) throws exception in PCA ctor
 AC_MSG_CHECKING([for EIGEN version 3.2.1 or later])
 
 save_CXXFLAGS="$CXXFLAGS"
-CXXFLAGS="$EIGEN_CFLAGS"
+CXXFLAGS="$EIGEN_INCLUDES"
 
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
     @%:@include <Eigen/Core>
