@@ -47,17 +47,6 @@ PCA::PCA(const Matrix& x, bool s) : autoscale_(s)
         scale_ = Vector::Ones(p_);
     }
 
-    /*
-      Matrix cov = (xmc.transpose() * xmc) / double (n_ - 1);
-      Eigen::SelfAdjointEigenSolver<Matrix> solver_(cov);
-      if (solver_.info() != Eigen::Success) abort();
-
-      eigenvalues_ = solver_.eigenvalues().reverse();
-      coefficients_ = solver_.eigenvectors().rowwise().reverse();
-      scores_ = xmc * coefficients_;
-      explained_ = 100 * eigenvalues_ / eigenvalues_.sum();
-    */
-
     Eigen::JacobiSVD<Matrix> svd(xmc, Eigen::ComputeThinU | Eigen::ComputeThinV);
     var_ = svd.singularValues().array().square()/(n_-1);
     coefficients_ = svd.matrixV();
