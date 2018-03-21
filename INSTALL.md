@@ -21,14 +21,13 @@ and binary packages
 The file `SHA256SUMS` contains the SHA256 checksums for each file.
 
 The files are signed with the
-[GPG public key](https://github.com/uop-ibbs/mdash/raw/master/pubkey.asc)
+[GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc)
 with fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.
 The signatures are in the files with .asc extensions.
 
-To verify a signature, first download and import the public key:
+To verify a signature, first import the public key:
 
-    wget https://github.com/uop-ibbs/mdash/raw/master/pubkey.asc
-    gpg --import pubkey.asc
+    gpg --import https://github.com/uop-ibbs/mdash/master/pubkey.asc
 
 then use the command:
 
@@ -37,13 +36,7 @@ then use the command:
 replacing the name of the file as appropriate. If all is well this
 should produce output along the lines of:
 
-    gpg: assuming signed data in `mdash-3.1.0.tar.bz2'
-    gpg: Signature made Thu 04 Jan 2018 13:36:46 GMT using RSA key ID 4E10D89E
-    gpg: Good signature from "David Whitley (Package Signing Key) <david.whitley@port.ac.uk>"
-    gpg: WARNING: This key is not certified with a trusted signature!
-    gpg:          There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: 0C66 53A8 6507 A92D CD07  B878 BBD9 D1DB 4E10 D89E
-
+[TODO]
 The warning is expected and can be ignored.
 
 
@@ -58,7 +51,7 @@ To install a GNU/Linux binary package use the appropriate command
 On Windows simply run mdash-x.y.z.exe.
 
 The binary packages install under `/usr` on GNU/Linux and `C:\Program
-Files (x86)\Mdash` on Windows.
+Files (x86)\mdash-x.y.z on Windows.
 
 
 Extracting the source code
@@ -82,14 +75,13 @@ use the binary installer and avoid building from the source code.
 The simplest way to build MDASH on Windows is to use the [MSYS2
 environment](https://msys2.github.io/). This is a much-improved
 successor to Cygwin and the various versions of MinGW, and is highly
-recommended. See the [Distribution-specific notes](#Distribution-specific notes)
+recommended. See the [Distribution-specific notes](#user-content-distribution-specific-notes)
 for details on setting up MSYS2 and installing the prerequisites, then
 follow the instructions for installing on GNU/Linux.
 
 Alternatively, masochists may build MDASH using the Visual Studio
 command-line tools by following the instructions in
-[Building MDASH on Windows using Visual Studio](#Building MDASH on
-Windows using Visual Studio).
+[Building on Windows with Visual Studio](#user-content-building-on-windows-with-visual-studio).
 
 
 Prerequisites
@@ -285,8 +277,8 @@ For example:
     cmake -DBUILD_GUI=OFF -DBOOST_ROOT=/opt/modules/boost/1.64.0 ..
 
 
-Building MDASH on Windows using Visual Studio
----------------------------------------------
+Building on Windows with Visual Studio
+--------------------------------------
 
 This should only be considered by experienced developers, it is
 definitely not for the faint-hearted. The main obstacle is in setting
@@ -340,6 +332,7 @@ stable release (glm-0.9.8.5.zip). Unpack the .zip file in MDASHREQ.
 The result should be a folder containing these subfolders (version
 numbers may vary):
 
+[TODO: check]
     wxWidgets-3.1.0
     boost-1.65.1
     Eigen-3.3.4
@@ -379,9 +372,7 @@ With the prerequisites in place, the actual build is straightforward.
            nmake
            nmake install
 
-       The final install step is optional. The mdash.exe program is
-       built in the folder `build\src` and may be moved to somewhere
-       more convenient.
+       The final install step is optional. The mdash.exe program is built in [TODO]???? and may be moved to somewhere more convenient.
 
 
 Distribution-specific notes
