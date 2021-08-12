@@ -20,7 +20,7 @@
 #include <wx/chartrenderer.h>
 #include <wx/marker.h>
 
-#include <wx/dynarray.h>
+#include <vector>
 
 class Dataset;
 class DateTimeDataset;
@@ -184,9 +184,11 @@ public:
 	virtual size_t GetCount() = 0;
 };
 
-WX_DECLARE_USER_EXPORTED_OBJARRAY(Dataset *, DatasetArrayBase, WXDLLIMPEXP_FREECHART);
-
-class WXDLLIMPEXP_FREECHART DatasetArray : public DatasetArrayBase
+/**
+ * Replaces a wxArray construction that fails to compile with wxwidgets >= 3.1.2
+ * dw, 24May2021
+ */
+class WXDLLIMPEXP_FREECHART DatasetArray
 {
 public:
 	DatasetArray();
@@ -197,6 +199,13 @@ public:
 	void Remove(Dataset *dataset);
 
 	void RemoveAt(size_t index, size_t count = 1);
+
+        size_t Count() const { return m_datasetarray.size(); }
+
+        Dataset* operator[] (size_t i) const { return m_datasetarray.at(i); }
+
+ private:
+        std::vector<Dataset*> m_datasetarray;
 };
 
 #endif /*DATASET_H_*/

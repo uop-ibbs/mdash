@@ -9,7 +9,7 @@
 
 #include <wx/dataset.h>
 
-#include "wx/arrimpl.cpp"
+#include <algorithm>
 
 DatasetObserver::DatasetObserver()
 {
@@ -123,38 +123,38 @@ DateTimeDataset::~DateTimeDataset()
 // DatasetArray
 //
 
-WX_DEFINE_EXPORTED_OBJARRAY(DatasetArrayBase)
-
 DatasetArray::DatasetArray()
 {
 }
 
 DatasetArray::~DatasetArray()
 {
-	for (size_t n = 0; n < Count(); n++) {
-		Dataset *dataset = Item(n);
-		SAFE_UNREF(dataset);
-	}
+        for (Dataset* dataset: m_datasetarray) {
+            SAFE_UNREF(dataset);
+        }
 }
 
 void DatasetArray::Add(Dataset *dataset)
 {
 	dataset->AddRef();
-	DatasetArrayBase::Add(dataset);
+        m_datasetarray.push_back(dataset);
 }
 
 void DatasetArray::Remove(Dataset *dataset)
 {
-	SAFE_UNREF(dataset);
-	DatasetArrayBase::Remove(dataset);
+        std::vector<Dataset*>::iterator pos = find(m_datasetarray.begin(), m_datasetarray.end(), dataset);
+
+        if (pos != m_datasetarray.end()) {
+            SAFE_UNREF(dataset);
+            m_datasetarray.erase(pos);
+        }
 }
 
 void DatasetArray::RemoveAt(size_t index, size_t count)
 {
-	for (size_t n = index; n < index + count; n++) {
-		Dataset *dataset = Item(n);
-		SAFE_UNREF(dataset);
-	}
+        for (size_t n = index; n < index + count; n++) {
+            SAFE_UNREF(m_datasetarray.at(n));
+        }
 
-	DatasetArrayBase::RemoveAt(index, count);
+        m_datasetarray.erase(m_datasetarray.begin() + index, m_datasetarray.begin() + index + count);
 }
