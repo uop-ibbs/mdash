@@ -59,7 +59,7 @@ PlotCanvas3D::init_gl()
 
     if (err != GLEW_OK) {
         std::ostringstream os;
-        os << "Error: " << glewGetErrorString(err);
+        os << "glewInit failed (err=" << err << ") : " << glewGetErrorString(err);
         wxLogError(wxString(os.str()));
     }
 
@@ -278,14 +278,13 @@ PlotCanvas3D::on_paint(wxPaintEvent& WXUNUSED(e))
 {
     wxPaintDC dc(this);  // required but unused
     if (!initialized_) init_gl();
+    SetCurrent(*context_);
     draw();
 }
 
 void
 PlotCanvas3D::draw()
 {
-    SetCurrent(*context_);
-
     GLint v_pos = glGetAttribLocation(program_, "v_pos");
     GLint v_clr = glGetAttribLocation(program_, "v_clr");
     GLint transform = glGetUniformLocation(program_, "transform");

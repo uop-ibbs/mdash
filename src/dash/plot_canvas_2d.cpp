@@ -51,7 +51,7 @@ PlotCanvas2D::init_gl()
 
     if (err != GLEW_OK) {
         std::ostringstream os;
-        os << "Error: " << glewGetErrorString(err);
+        os << "glewInit failed (err=" << err << ") : " << glewGetErrorString(err);
         wxLogError(wxString(os.str()));
     }
 
