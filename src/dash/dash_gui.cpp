@@ -26,7 +26,7 @@
 #include "dash/version.h"
 #include "dash/viewer_gui.h"
 
-#include "dash/dash_icon.xpm"
+#include "dash/icons/mdash128.xpm"
 
 #include <fstream>
 #include <string>
@@ -46,7 +46,7 @@
 
 DashGUI::DashGUI(wxWindow* parent) : DashFBUI(parent)
 {
-    SetIcon(wxIcon(dash_icon));
+    SetIcon(wxIcon(mdash));
 
 #ifdef NOAMBER
     int id = open_menu->FindItem("Amber trajectory...");
@@ -286,8 +286,8 @@ DashGUI::on_about(wxCommandEvent& WXUNUSED(event))
     aboutInfo.SetVersion(version);
     aboutInfo.SetDescription("Extract states from molecular dynamics trajectories");
     aboutInfo.SetCopyright("(C) 2008-2017 Centre for Molecular Design, University of Portsmouth");
-    aboutInfo.SetWebSite("http://www.port.ac.uk/research/cmd/software");
-    aboutInfo.SetIcon(wxIcon(dash_icon));
+    aboutInfo.SetWebSite("https://github.com/uop-ibbs/mdash");
+    aboutInfo.SetIcon(wxIcon(mdash));
     aboutInfo.SetLicense("This program is free software; you can redistribute it and/or modify\n"
                          "it under the terms of the GNU General Public Licence as published by\n"
                          "the Free Software Foundation; either version 3 of the Licence, or\n"

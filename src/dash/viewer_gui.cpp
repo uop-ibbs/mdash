@@ -34,7 +34,7 @@
 #include "dash/trajectory_panel.h"
 #include "dash/version.h"
 
-#include "dash/dash_icon.xpm"
+#include "dash/icons/mdash128.xpm"
 
 #include <algorithm>
 #include <ctime>
@@ -45,7 +45,7 @@
 
 ViewerGUI::ViewerGUI(const Dash* dash, DashGUI* dash_gui) : ViewerFBUI(dash_gui), dash_(dash)
 {
-    SetIcon(wxIcon(dash_icon));
+    SetIcon(wxIcon(mdash));
     opt_.pca_dim = std::min(opt_.pca_dim, static_cast<int>(dash_->vars()));
     pca_options->Enable(dash_->pca() && dash_gui->opengl_support());
 
