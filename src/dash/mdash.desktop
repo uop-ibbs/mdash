@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Mdash
+Comment=Identifies the major states in molecular dynamics simulations
+TryExec=/usr/bin/mdash
+Exec=/usr/bin/mdash
+Icon=mdash
+Type=Application
+Terminal=false
+Categories=Education;Science;Chemistry
