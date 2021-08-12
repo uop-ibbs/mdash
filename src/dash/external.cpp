@@ -55,6 +55,7 @@ execute(std::string path, std::vector<std::string> args,
         std_err = fut_err.get();
     }
 
+    c.wait();
     return c.exit_code();
 }
 
