@@ -75,6 +75,7 @@ endif()
 
 if (BUILD_AMBER)
     set(DASH_BOOST_VERSION 1.64)
+#    set(DASH_BOOST_VERSION 1.76)
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         add_compile_options(-Wno-unused-parameter)
@@ -113,9 +114,9 @@ include_directories(..)
 target_link_libraries(mdash cmdlib)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem system regex iostreams bzip2 zlib)
+    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem iostreams bzip2 zlib)
 else()
-    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem system regex iostreams)
+    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem iostreams)
 endif()
 
 include_directories(${Boost_INCLUDE_DIRS})
@@ -145,9 +146,13 @@ if (BUILD_GUI)
         find_package(wxWidgets REQUIRED adv base core html gl)
     endif()
 
+    include_directories(../wxfreechart/include)
+    target_link_libraries(mdash wxfreechart)
+
     include(${wxWidgets_USE_FILE})
     target_link_libraries(mdash ${wxWidgets_LIBRARIES})
 
+    set(OpenGL_GL_PREFERENCE LEGACY) # LEGACY for -lGL; GLVND for -lOpenGL;
     find_package(OpenGL REQUIRED)
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(mdash ${OPENGL_LIBRARIES})
@@ -158,9 +163,6 @@ if (BUILD_GUI)
 
     find_package(GLM REQUIRED)
     include_directories(${GLM_INCLUDE_DIR})
-
-    include_directories(../wxfreechart/include)
-    target_link_libraries(mdash wxfreechart)
 endif()
 
 install(TARGETS mdash DESTINATION ${BIN_INSTALL_DIR})

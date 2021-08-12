@@ -3,7 +3,7 @@
 # Process this file with "autoconf -I/usr/share/aclocal" to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([mdash],[3.1.0])
+AC_INIT([mdash],[3.1.1])
 AC_CONFIG_SRCDIR([src/dash/main.cpp])
 
 AC_LANG(C++)
@@ -26,20 +26,30 @@ AX_CHECK_PREPROC_FLAG([-MM], [DEPFLAGS="-MM"], [DEPFLAGS="-M"])
 m4_include([ax_require_defined.m4])
 m4_include([ax_append_flag.m4])
 m4_include([ax_cflags_warn_all.m4])
-
-AX_CXXFLAGS_WARN_ALL(CXX_WARNINGS)
-
 m4_include([ax_check_compile_flag.m4])
 
-AX_CHECK_COMPILE_FLAG([-Wextra], [CXX_WARNINGS="$CXX_WARNINGS -Wextra"])
-AX_CHECK_COMPILE_FLAG([-Wpedantic], [CXX_PEDANTIC="-Wpedantic"])
+AX_CHECK_COMPILE_FLAG([-std=c++14], [CXX_STD="-std=c++14"])
 
-AX_CHECK_COMPILE_FLAG([-std=c++11], [CXX_STD="-std=c++11"])
+if test "x$CXX_STD" = x; then
+   AX_CHECK_COMPILE_FLAG([-std=c++11], [CXX_STD="-std=c++11"])
+fi
 
 if test "x$CXX_STD" = x; then
     AX_CHECK_COMPILE_FLAG([-std=c++0x], [CXX_STD="-std=c++0x"],
         AC_MSG_ERROR([*** A compiler with support for C++11 language features is required.]))
 fi
+
+AX_CXXFLAGS_WARN_ALL(CXX_WARNINGS)
+AX_CHECK_COMPILE_FLAG([-Wextra], [CXX_WARNINGS="$CXX_WARNINGS -Wextra"])
+AX_CHECK_COMPILE_FLAG([-Wpedantic], [CXX_PEDANTIC="-Wpedantic"])
+
+dnl turn off various warnings produced by third-party headers
+dnl eigen 3.3.4
+AX_CHECK_COMPILE_FLAG([-Wno-int-in-bool-context], [EIGEN_WARNINGS="-Wno-int-in-bool-context"], [EIGEN_WARNINGS=""])
+dnl wxWidgets 3.0.4
+AX_CHECK_COMPILE_FLAG([-Wno-deprecated-copy], [WX_WARNINGS="$WX_WARNINGS -Wno-deprecated-copy"], [WX_WARNINGS=""])
+AX_CHECK_COMPILE_FLAG([-Wno-ignored-qualifiers], [WX_WARNINGS="$WX_WARNINGS -Wno-ignored-qualifiers"])
+AX_CHECK_COMPILE_FLAG([-Wno-cast-function-type], [WX_WARNINGS="$WX_WARNINGS -Wno-cast-function-type"])
 
 if test "x$ax_enable_debug" = "xno"; then
     if test "x$GXX" = "xyes" ; then
@@ -77,16 +87,35 @@ m4_include([ax_boost_base.m4])
 m4_include([ax_boost_program_options.m4])
 m4_include([ax_boost_filesystem.m4])
 m4_include([ax_boost_system.m4])
-m4_include([ax_boost_regex.m4])
 m4_include([ax_boost_iostreams.m4])
 
 AX_BOOST_BASE([$BOOST_VERSION],[BOOST_INCLUDES="$BOOST_CPPFLAGS"],[AC_MSG_ERROR([Can't find the Boost libraries.])])
-
 AX_BOOST_PROGRAM_OPTIONS
 AX_BOOST_FILESYSTEM
-AX_BOOST_SYSTEM
-AX_BOOST_REGEX
 AX_BOOST_IOSTREAMS
+
+dnl boost_filesystem depends on boost_system in boost < 1.69
+AC_MSG_CHECKING([for boostlib >= 1.69 (106900)])
+
+save_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$BOOST_INCLUDES"
+
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    @%:@include <boost/version.hpp>
+    ]], [[
+    #if BOOST_VERSION >= 106900
+    // OK
+    #else
+    #  error Boost version < 1.69.0
+    #endif
+    ]])],[
+        AC_MSG_RESULT(yes)
+    ],[
+        AC_MSG_RESULT(no)
+        AX_BOOST_SYSTEM
+    ])
+
+CXXFLAGS="$save_CXXFLAGS"
 
 dnl Check for pkg-config
 m4_include([pkg.m4])
@@ -156,9 +185,9 @@ dnl Check for wxWidgets
 dnl sets $WX_CPPFLAGS $WX_CXXFLAGS $WX_LIBS
 
 dnl uncomment next line on ubuntu
-#m4_include([wxwin.m4])
+m4_include([wxwin.m4])
 dnl uncomment next line on rhel
-m4_include([wxwin3.m4])
+#m4_include([wxwin3.m4])
 
 reqwx=3.0.0
 
@@ -233,6 +262,8 @@ AC_SUBST(AMBER_DEFINES)
 AC_SUBST(BOOST_INCLUDES)
 AC_SUBST(BOOST_WARNINGS)
 AC_SUBST(EIGEN_INCLUDES)
+AC_SUBST(EIGEN_WARNINGS)
+AC_SUBST(WX_WARNINGS)
 AC_SUBST(BUILD_GUI_TRUE)
 AC_SUBST(BUILD_GUI_FALSE)
 AC_SUBST(GLM_INCLUDES)

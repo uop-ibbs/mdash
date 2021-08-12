@@ -19,16 +19,19 @@ MKDIR_P      = @MKDIR_P@
 INSTALL      = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 
-EXAMPLES = \
+EXAMPLES := \
 	avp.nc  avp.out  avp.parm7  avp.tor \
 	hUII.in  hUII.out \
 	repex.in.bz2  repex.out \
 	tzd.in.gz  tzd.out
 
+BZIPPED := $(addsuffix .bz2, $(subst .bz2,,$(subst .gz,,$(EXAMPLES))))
+
 install: $(addprefix $(srcdir)/, $(EXAMPLES))
 	$(MKDIR_P) $(DESTDIR)$(docdir)/examples
 	$(INSTALL_DATA) $^ $(DESTDIR)$(docdir)/examples
+	(cd $(DESTDIR)$(docdir)/examples && gzip -d *gz && bzip2 -d *bz2 && bzip2 *)
 
 uninstall:
-	-(cd $(DESTDIR)$(docdir)/examples && rm -f $(EXAMPLES))
+	-([ -d $(DESTDIR)$(docdir)/examples ] && cd $(DESTDIR)$(docdir)/examples && rm -f $(BZIPPED))
 	-([ -d $(DESTDIR)$(docdir)/examples ] && rmdir $(DESTDIR)$(docdir)/examples)

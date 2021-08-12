@@ -48,10 +48,13 @@ AMBER_DEFINES = @AMBER_DEFINES@
 
 BOOST_INCLUDES = @BOOST_INCLUDES@
 BOOST_LDFLAGS  = @BOOST_LDFLAGS@
-BOOST_LIBS     = @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_SYSTEM_LIB@ @BOOST_REGEX_LIB@ @BOOST_IOSTREAMS_LIB@
+BOOST_LIBS     = @BOOST_PROGRAM_OPTIONS_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_SYSTEM_LIB@ @BOOST_IOSTREAMS_LIB@
 BOOST_WARNINGS = @BOOST_WARNINGS@
 
 EIGEN_INCLUDES = @EIGEN_INCLUDES@
+EIGEN_WARNINGS = @EIGEN_WARNINGS@
+
+WX_WARNINGS    = @WX_WARNINGS@
 
 @BUILD_GUI_TRUE@WXFREECHART_INCLUDES = -I$(top_srcdir)/src/wxfreechart/include
 @BUILD_GUI_TRUE@WXFREECHART_LIB      = $(top_builddir)/src/wxfreechart/src/libwxfreechart.a
@@ -79,11 +82,11 @@ EIGEN_INCLUDES = @EIGEN_INCLUDES@
 @BUILD_GUI_TRUE@OPENGL_LIBS    = $(GLEW_ONLY_LIBS) $(GLU_ONLY_LIBS) $(GL_LIBS)
 
 @BUILD_GUI_TRUE@CPPFLAGS += $(CXX_STD) $(AMBER_DEFINES) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES) $(WXFREECHART_INCLUDES) $(WX_CPPFLAGS) $(OPENGL_CFLAGS) $(GLM_INCLUDES)
-@BUILD_GUI_TRUE@CXXFLAGS += $(CXX_STD) $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(CXX_SECURITY) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES) $(WXFREECHART_INCLUDES) $(WX_CXXFLAGS) $(OPENGL_CFLAGS) $(GLM_INCLUDES)
+@BUILD_GUI_TRUE@CXXFLAGS += $(CXX_STD) $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(EIGEN_WARNINGS) $(WX_WARNINGS) $(CXX_SECURITY) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES) $(WXFREECHART_INCLUDES) $(WX_CXXFLAGS) $(OPENGL_CFLAGS) $(GLM_INCLUDES)
 @BUILD_GUI_TRUE@LIBS     += $(BOOST_LIBS) $(CMDLIB_LIB) $(WXFREECHART_LIB) $(WX_LIBS) $(OPENGL_LIBS) $(EXTRA_LIBS)
 
 @BUILD_GUI_FALSE@CPPFLAGS += $(CXX_STD) -DNOGUI $(AMBER_DEFINES) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES)
-@BUILD_GUI_FALSE@CXXFLAGS += $(CXX_STD) -DNOGUI $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES)
+@BUILD_GUI_FALSE@CXXFLAGS += $(CXX_STD) -DNOGUI $(AMBER_DEFINES) $(CXX_WARNINGS) $(CXX_PEDANTIC) $(BOOST_WARNINGS) $(EIGEN_WARNINGS) $(CXX_OPTIMIZE) $(DASH_INCLUDES) $(BOOST_INCLUDES) $(EIGEN_INCLUDES)
 @BUILD_GUI_FALSE@LIBS     += $(BOOST_LIBS) $(CMDLIB_LIB) -lpthread $(EXTRA_LIBS)
 
 LDFLAGS  += $(BOOST_LDFLAGS)
@@ -210,7 +213,7 @@ $(PROGRAM): $(OBJECTS)
 
 # up-to-date docs are generated in srcdir before distribution,
 # so users shouldn't normally need or use this target
-doc: $(srcdir)/mdash.info $(srcdir)/mdash.pdf $(srcdir)/mdash.html $(srcdir)/mdash_html.h
+doc: $(srcdir)/mdash.info $(srcdir)/mdash.pdf $(srcdir)/mdash.html $(srcdir)/mdash_html.h $(srcdir)/mdash.1 $(srcdir)/amberdash.1
 
 $(srcdir)/mdash.info: $(srcdir)/mdash.texi
 	(cd $(srcdir) && makeinfo mdash.texi)
@@ -228,7 +231,7 @@ $(srcdir)/mdash_html.h: $(srcdir)/mdash.html
 
 AMBERDASH = amberdash
 
-install: install-program install-doc install-info install-man
+install: install-program install-doc install-info install-man install-data
 
 install-program: $(PROGRAM) $(srcdir)/$(AMBERDASH)
 	$(MKDIR_P) $(DESTDIR)$(bindir)
@@ -249,7 +252,17 @@ install-man: $(srcdir)/mdash.1 $(srcdir)/amberdash.1
 	$(MKDIR_P) $(DESTDIR)$(man1dir)
 	$(INSTALL_DATA) $^ $(DESTDIR)$(man1dir)
 
-uninstall: uninstall-program uninstall-doc uninstall-info uninstall-man
+install-data: $(srcdir)/mdash.desktop $(srcdir)/icons/mdash48.png $(srcdir)/icons/mdash128.png $(srcdir)/icons/mdash128.svg
+	$(MKDIR_P) $(DESTDIR)$(datarootdir)/applications
+	$(INSTALL_DATA) $(srcdir)/mdash.desktop $(DESTDIR)$(datarootdir)/applications/mdash.desktop
+	$(MKDIR_P) $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps
+	$(INSTALL_DATA) $(srcdir)/icons/mdash48.png $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps/mdash.png
+	$(MKDIR_P) $(DESTDIR)$(datarootdir)/icons/hicolor/128x128/apps
+	$(INSTALL_DATA) $(srcdir)/icons/mdash128.png $(DESTDIR)$(datarootdir)/icons/hicolor/128x128/apps/mdash.png
+	$(MKDIR_P) $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps
+	$(INSTALL_DATA) $(srcdir)/icons/mdash128.svg $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps/mdash.svg
+
+uninstall: uninstall-program uninstall-doc uninstall-info uninstall-man uninstall-data
 
 uninstall-program:
 	-rm -f $(DESTDIR)$(bindir)/$(PROGRAM)
@@ -269,16 +282,25 @@ uninstall-man:
 	-rm -f $(DESTDIR)$(man1dir)/mdash.1
 	-rm -f $(DESTDIR)$(man1dir)/amberdash.1
 
+uninstall-data:
+	-rm -f $(DESTDIR)$(datarootdir)/applications/mdash.desktop
+	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps/mdash.png
+	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/128x128/apps/mdash.png
+	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps/mdash.svg
+
 # distribution
 DIST_HEADERS = $(COMMON_HEADERS) $(GUI_HEADERS) $(AMBER_HEADERS)
 DIST_SOURCES = $(COMMON_SOURCES) $(CLI_SOURCES) $(GUI_SOURCES) $(AMBER_SOURCES) $(AMBER_GUI_SOURCES) $(AMBERDASH)
 DIST_DOCS = mdash.texi mdash.info mdash.pdf mdash.html mdash.1 amberdash.1
-DIST_EXTRA = Makefile.in CMakeLists.txt dash_icon.xpm dash.fbp tiled_pager_panel.fbp
+DIST_EXTRA = Makefile.in CMakeLists.txt dash.fbp tiled_pager_panel.fbp mdash.desktop
+DIST_ICONS = $(addprefix $(srcdir)/icons/, mdash48.png mdash128.png mdash128.svg mdash128.xpm)
 DIST_FILES = $(addprefix $(srcdir)/, $(DIST_HEADERS) $(DIST_SOURCES) $(DIST_DOCS) $(DIST_EXTRA))
 
-dist: $(DIST_FILES)
+dist: $(DIST_FILES) $(DIST_ICONS)
 	$(MKDIR_P) $(top_builddir)/$(DIST_NAME)/src/dash
 	ln $(DIST_FILES) $(top_builddir)/$(DIST_NAME)/src/dash
+	$(MKDIR_P) $(top_builddir)/$(DIST_NAME)/src/dash/icons
+	ln $(DIST_ICONS) $(top_builddir)/$(DIST_NAME)/src/dash/icons
 
 clean:
 	-rm -f $(PROGRAM) $(OBJECTS) $(DEPENDS) *~

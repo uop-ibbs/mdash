@@ -1,9 +1,8 @@
 # $Id: CMakeLists.txt 132 2017-12-19 15:01:25Z dw $
 
 cmake_minimum_required(VERSION 3.1.0)
-cmake_policy(SET CMP0048 NEW)
 
-project(MDash VERSION 3.1.0 LANGUAGES CXX C)
+project(MDash VERSION 3.2.0 LANGUAGES CXX C)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
@@ -19,7 +18,7 @@ set(INFO_INSTALL_DIR      share/info)
 set(MAN1_INSTALL_DIR      share/man/man1)
 set(EXAMPLES_INSTALL_DIR  share/doc/mdash-${PROJECT_VERSION}/examples)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
