@@ -27,6 +27,7 @@
 TrackballCanvas::TrackballCanvas(wxWindow *parent, const int *attr, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
     : wxGLCanvas(parent, id, attr, pos, size, style)
 {
+    model_view_ = glm::mat4(1.0f);
     rotating_ = false;
 
     Bind(wxEVT_LEFT_DOWN, &TrackballCanvas::on_left_down, this);
@@ -100,6 +101,6 @@ TrackballCanvas::on_key_down(wxKeyEvent& e)
 void
 TrackballCanvas::reset()
 {
-    model_view_ = glm::mat4();
+    model_view_ = glm::mat4(1.0f);
     draw();
 }

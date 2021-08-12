@@ -34,7 +34,6 @@ class TrackballCanvas : public wxGLCanvas
     ~TrackballCanvas();
 
  protected:
-    glm::mat4 projection_;
     glm::mat4 model_view_;
 
     virtual void draw() = 0;

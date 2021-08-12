@@ -50,6 +50,7 @@ class PlotCanvas3D : public TrackballCanvas
     GLuint ylabel_buf_;
     GLuint zlabel_buf_;
     GLuint monochrome_;
+    glm::mat4 projection_;
 
     void init_gl();
     void init_shaders();
