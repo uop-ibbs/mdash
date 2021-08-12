@@ -35,24 +35,26 @@
 #include <boost/program_options.hpp>
 
 namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
+namespace fs = boost::filesystem;
 
 const std::string usage =
 #ifndef NOGUI
-    "Usage: mdash\n"
-    "           Launch the graphical interface\n\n"
-    "       mdash [options] -i <input_file>  -o <output_file>\n"
-    "           Run mdash from the command line with the specified options\n\n"
+    "Usage:\n"
+    "  mdash\n"
+    "      Launch the graphical interface\n\n"
+    "  mdash [options] -i <input_file>  -o <output_file>\n"
+    "      Run mdash from the command line with the specified options\n\n"
 #else
-    "Usage: mdash [options] -i <input_file>  -o <output_file>\n"
-    "           Run mdash from the command line with the specified options\n\n"
+    "Usage:\n"
+    "  mdash [options] -i <input_file>  -o <output_file>\n"
+    "      Run mdash from the command line with the specified options\n\n"
 #endif
 #ifndef NOAMBER
-    "       mdash [options] -P <parameter_file> -T <trajectory_file> -o <output_file>\n"
-    "           Run mdash from the command line on an Amber trajectory\n\n"
+    "  mdash [options] -P <parameter_file> -T <trajectory_file> -o <output_file>\n"
+    "      Run mdash from the command line on an Amber trajectory\n\n"
 #endif
-    "       mdash -S|--similarity <file1> <file2>\n"
-    "           Calculate similarities between states in two mdash output files\n";
+    "  mdash -S|--similarity <file1> <file2>\n"
+    "      Calculate similarities between states in two mdash output files\n";
 
 int
 dash_cli(int argc, argv_t **argv)
@@ -248,10 +250,10 @@ dash_cli(int argc, argv_t **argv)
 #endif // NOAMBER
 
     // check input file exists and convert filename to absolute path
-    bfs::path inpath(opt.infile);
+    fs::path inpath(opt.infile);
 
-    if (bfs::exists(inpath)) {
-        opt.infile = bfs::absolute(inpath).string();
+    if (fs::exists(inpath)) {
+        opt.infile = fs::absolute(inpath).string();
     } else {
         std::cerr << "Error: input file " << opt.infile << " does not exist\n";
         return EXIT_FAILURE;
@@ -274,7 +276,7 @@ dash_cli(int argc, argv_t **argv)
         // remove dash input file generated from amber trajectory
         if (!opt.amber_parm.empty() && !opt.keep_dash_in) {
             boost::system::error_code ec;
-            bfs::remove(opt.infile, ec);
+            fs::remove(opt.infile, ec);
 
             if (ec) {
                 std::cerr << "Warning: failed to remove mdash input file\nerror_code: "
