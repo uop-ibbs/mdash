@@ -3,8 +3,9 @@
 <!-- This manual is for MDASH, version 3.1.0.
 
 Copyright (C) 2017 Centre for Molecular Design, University of Portsmouth. -->
-<!-- Created by GNU Texinfo 6.1, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>MDASH Molecular Dynamics Analysis</title>
 
 <meta name="description" content="MDASH Molecular Dynamics Analysis">
@@ -12,7 +13,6 @@ Copyright (C) 2017 Centre for Molecular Design, University of Portsmouth. -->
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="#Top" rel="start" title="Top">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="dir.html#Top" rel="up" title="(dir)">
@@ -20,23 +20,14 @@ Copyright (C) 2017 Centre for Molecular Design, University of Portsmouth. -->
 <!--
 a.summary-letter {text-decoration: none}
 blockquote.indentedblock {margin-right: 0em}
-blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
-blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
-div.smalldisplay {margin-left: 3.2em}
-div.smallexample {margin-left: 3.2em}
-div.smalllisp {margin-left: 3.2em}
 kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
 pre.menu-preformatted {font-family: serif}
-pre.smalldisplay {font-family: inherit; font-size: smaller}
-pre.smallexample {font-size: smaller}
-pre.smallformat {font-family: inherit; font-size: smaller}
-pre.smalllisp {font-size: smaller}
 span.nolinebreak {white-space: nowrap}
 span.roman {font-family: initial; font-weight: normal}
 span.sansserif {font-family: sans-serif; font-weight: normal}
@@ -53,70 +44,66 @@ ul.no-bullet {list-style: none}
 
 
 
-<a name="SEC_Contents"></a>
+<span id="SEC_Contents"></span>
 <h2 class="contents-heading">Table of Contents</h2>
 
 <div class="contents">
 
 <ul class="no-bullet">
-  <li><a name="toc-Overview-1" href="#Overview">1 Overview</a></li>
-  <li><a name="toc-Running-the-program-1" href="#Running-the-program">2 Running the program</a>
+  <li><a id="toc-Overview-1" href="#Overview">1 Overview</a></li>
+  <li><a id="toc-Running-the-program-1" href="#Running-the-program">2 Running the program</a>
   <ul class="no-bullet">
-    <li><a name="toc-Command-line-interface" href="#Command-line-interface">2.1 Command line interface</a></li>
-    <li><a name="toc-Graphical-interface" href="#Graphical-interface">2.2 Graphical interface</a></li>
-    <li><a name="toc-Amberdash" href="#Amberdash">2.3 Amberdash</a></li>
-    <li><a name="toc-Replica-exchange-trajectories" href="#Replica-exchange-trajectories">2.4 Replica exchange trajectories</a></li>
+    <li><a id="toc-Command-line-interface" href="#Command-line-interface">2.1 Command line interface</a></li>
+    <li><a id="toc-Graphical-interface" href="#Graphical-interface">2.2 Graphical interface</a></li>
+    <li><a id="toc-Amberdash" href="#Amberdash">2.3 Amberdash</a></li>
+    <li><a id="toc-Replica-exchange-trajectories" href="#Replica-exchange-trajectories">2.4 Replica exchange trajectories</a></li>
   </ul></li>
-  <li><a name="toc-File-Formats-1" href="#File-Formats">3 File Formats</a>
+  <li><a id="toc-File-Formats-1" href="#File-Formats">3 File Formats</a>
   <ul class="no-bullet">
-    <li><a name="toc-Input-Files" href="#Input-Files">3.1 Input Files</a></li>
-    <li><a name="toc-Output-Files" href="#Output-Files">3.2 Output Files</a></li>
+    <li><a id="toc-Input-Files" href="#Input-Files">3.1 Input Files</a></li>
+    <li><a id="toc-Output-Files" href="#Output-Files">3.2 Output Files</a></li>
   </ul></li>
-  <li><a name="toc-Installation-1" href="#Installation">4 Installation</a>
+  <li><a id="toc-Installation-1" href="#Installation">4 Installation</a>
   <ul class="no-bullet">
-    <li><a name="toc-Obtaining-the-software" href="#Obtaining-the-software">4.1 Obtaining the software</a></li>
-    <li><a name="toc-Compiling-and-installing-the-programs" href="#Compiling-and-installing-the-programs">4.2 Compiling and installing the programs</a></li>
-    <li><a name="toc-Documentation" href="#Documentation">4.3 Documentation</a></li>
-    <li><a name="toc-Authors" href="#Authors">4.4 Authors</a></li>
-    <li><a name="toc-Contact" href="#Contact">4.5 Contact</a></li>
+    <li><a id="toc-Obtaining-the-software" href="#Obtaining-the-software">4.1 Obtaining the software</a></li>
+    <li><a id="toc-Compiling-and-installing-the-programs" href="#Compiling-and-installing-the-programs">4.2 Compiling and installing the programs</a></li>
+    <li><a id="toc-Documentation" href="#Documentation">4.3 Documentation</a></li>
+    <li><a id="toc-Authors" href="#Authors">4.4 Authors</a></li>
+    <li><a id="toc-Contact" href="#Contact">4.5 Contact</a></li>
   </ul></li>
 </ul>
 </div>
 
 
 
-<a name="Top"></a>
-<div class="header">
+<span id="Top"></span><div class="header">
 <p>
 Next: <a href="#Overview" accesskey="n" rel="next">Overview</a>, Previous: <a href="dir.html#Top" accesskey="p" rel="prev">(dir)</a>, Up: <a href="dir.html#Top" accesskey="u" rel="up">(dir)</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
-<a name="MDASH-Molecular-Dynamics-Analysis"></a>
-<h1 class="top">MDASH Molecular Dynamics Analysis</h1>
+<span id="MDASH-Molecular-Dynamics-Analysis"></span><h1 class="top">MDASH Molecular Dynamics Analysis</h1>
 
 <p>This manual documents MDASH, version 3.1.0, a program for
 extracting states from molecular dynamics trajectories.
 </p>
 <table class="menu" border="0" cellspacing="0">
-<tr><td align="left" valign="top">&bull; <a href="#Overview" accesskey="1">Overview</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">An overview of the algorithm.
+<tr><td align="left" valign="top">&bull; <a href="#Overview" accesskey="1">Overview</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">An overview of the algorithm.
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Running-the-program" accesskey="2">Running the program</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to use the program.
+<tr><td align="left" valign="top">&bull; <a href="#Running-the-program" accesskey="2">Running the program</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to use the program.
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#File-Formats" accesskey="3">File Formats</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">The format of the input and output files.
+<tr><td align="left" valign="top">&bull; <a href="#File-Formats" accesskey="3">File Formats</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">The format of the input and output files.
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="#Installation" accesskey="4">Installation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to obtain, compile and install the programs.
+<tr><td align="left" valign="top">&bull; <a href="#Installation" accesskey="4">Installation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to obtain, compile and install the programs.
 </td></tr>
 </table>
 
 <hr>
-<a name="Overview"></a>
-<div class="header">
+<span id="Overview"></span><div class="header">
 <p>
 Next: <a href="#Running-the-program" accesskey="n" rel="next">Running the program</a>, Previous: <a href="#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
-<a name="Overview-1"></a>
-<h2 class="chapter">1 Overview</h2>
+<span id="Overview-1"></span><h2 class="chapter">1 Overview</h2>
 
 <p>DASH is a technique for analysing molecular dynamics (MD) simulations
 based on the torsion angles of rotatable bonds. It extracts the major
@@ -184,14 +171,12 @@ data. Analysis of ligands of PPAR-gamma, J. Med. Chem., 48, 3214-3220,
 </li></ul>
 
 <hr>
-<a name="Running-the-program"></a>
-<div class="header">
+<span id="Running-the-program"></span><div class="header">
 <p>
 Next: <a href="#File-Formats" accesskey="n" rel="next">File Formats</a>, Previous: <a href="#Overview" accesskey="p" rel="prev">Overview</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
-<a name="Running-the-program-1"></a>
-<h2 class="chapter">2 Running the program</h2>
+<span id="Running-the-program-1"></span><h2 class="chapter">2 Running the program</h2>
 
 <p>The program was originally called <code>dash</code>, but since its first
 release the Debian Almquist shell, also named <code>dash</code>, has become
@@ -200,8 +185,7 @@ a name clash, releases will henceforth be named <var>mdash-x.y.z</var> and
 the main program is now <code>mdash</code>. The main algorithm, however,
 will continue to be known as the DASH algorithm.
 </p>
-<a name="Command-line-interface"></a>
-<h3 class="section">2.1 Command line interface</h3>
+<span id="Command-line-interface"></span><h3 class="section">2.1 Command line interface</h3>
 
 <p>The syntax for the <code>mdash</code> command is:
 </p>
@@ -339,8 +323,7 @@ residue numbers or ranges N-M. If omitted, all residues are analysed.
 </p></dd>
 </dl>
 
-<a name="Graphical-interface"></a>
-<h3 class="section">2.2 Graphical interface</h3>
+<span id="Graphical-interface"></span><h3 class="section">2.2 Graphical interface</h3>
 
 <p>The <code>mdash</code> command without any options launches the graphical
 interface. The workflow consists of loading a DASH input file or an
@@ -447,8 +430,7 @@ visible, otherwise their selection is disabled in the menu.
 <p>The manual can be viewed by selecting <tt class="key">Help|Manual</tt> in the main
 window.
 </p>
-<a name="Amberdash"></a>
-<h3 class="section">2.3 Amberdash</h3>
+<span id="Amberdash"></span><h3 class="section">2.3 Amberdash</h3>
 
 <p>The Perl script <code>amberdash</code> runs <code>mdash</code> on trajectories
 generated by Amber (<a href="http://ambermd.org">http://ambermd.org</a>). Documentation in POD
@@ -464,8 +446,7 @@ PATH, specify their full pathnames at the top of the script.
 <p>Much of the functionality of <code>amberdash</code> is now integrated into the
 main <code>mdash</code> program.
 </p>
-<a name="Replica-exchange-trajectories"></a>
-<h3 class="section">2.4 Replica exchange trajectories</h3>
+<span id="Replica-exchange-trajectories"></span><h3 class="section">2.4 Replica exchange trajectories</h3>
 
 <p>For pseudo-trajectories formed by concatenating sections of replica
 exchange molecular dynamics, initial tests showed the steps in the DASH
@@ -481,20 +462,17 @@ combined state trajectory, with sparsely populated states marked as
 state 0.
 </p>
 <hr>
-<a name="File-Formats"></a>
-<div class="header">
+<span id="File-Formats"></span><div class="header">
 <p>
 Next: <a href="#Installation" accesskey="n" rel="next">Installation</a>, Previous: <a href="#Running-the-program" accesskey="p" rel="prev">Running the program</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
-<a name="File-Formats-1"></a>
-<h2 class="chapter">3 File Formats</h2>
+<span id="File-Formats-1"></span><h2 class="chapter">3 File Formats</h2>
 
 <p>Some sample input and output files are provided in the <samp>examples</samp>
 directory.
 </p>
-<a name="Input-Files"></a>
-<h3 class="section">3.1 Input Files</h3>
+<span id="Input-Files"></span><h3 class="section">3.1 Input Files</h3>
 
 <p>The input files for <code>mdash</code> are whitespace-separated ASCII text
 files containing the values of <var>ntor</var> torsion angles, in degrees, at
@@ -505,8 +483,7 @@ single column and the values for each time step in a single row.
 case the file type is inferred from the filename extension, which must
 be <code>.gz</code> or <code>.bz2</code>, respectively.
 </p>
-<a name="Output-Files"></a>
-<h3 class="section">3.2 Output Files</h3>
+<span id="Output-Files"></span><h3 class="section">3.2 Output Files</h3>
 
 <p>Following two header lines containing the version number and a
 timestamp, the DASH output file is divided into blocks separated by tags
@@ -789,24 +766,21 @@ Cumulative      0.1981      0.3345  ...   0.9371      1.0000
 </pre></div>
 
 <hr>
-<a name="Installation"></a>
-<div class="header">
+<span id="Installation"></span><div class="header">
 <p>
 Next: <a href="dir.html#Top" accesskey="n" rel="next">(dir)</a>, Previous: <a href="#File-Formats" accesskey="p" rel="prev">File Formats</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>]</p>
 </div>
 
-<a name="Installation-1"></a>
-<h2 class="chapter">4 Installation</h2>
+<span id="Installation-1"></span><h2 class="chapter">4 Installation</h2>
 
-<a name="Obtaining-the-software"></a>
-<h3 class="section">4.1 Obtaining the software</h3>
+<span id="Obtaining-the-software"></span><h3 class="section">4.1 Obtaining the software</h3>
 
 <p>The software is distributed under the terms of the GNU General Public
 License, version 3 (see the <samp>LICENSE</samp> file for details), and can be
 downloaded from
 </p>
 <div class="example">
-<pre class="example"><a href="https://github.com/uop-ibbs">https://github.com/uop-ibbs</a>
+<pre class="example"><a href="https://github.com/uop-ibbs/mdash">https://github.com/uop-ibbs/mdash</a>
 </pre></div>
 
 <p>Binary packages are provided for GNU/Linux (RPM and DEB) and for
@@ -827,21 +801,18 @@ unzip dash-x.y.z.zip
 <p>as appropriate to unpack the archive into a directory <samp>mdash-x.y.z</samp>.
 </p>
 
-<a name="Compiling-and-installing-the-programs"></a>
-<h3 class="section">4.2 Compiling and installing the programs</h3>
+<span id="Compiling-and-installing-the-programs"></span><h3 class="section">4.2 Compiling and installing the programs</h3>
 
 <p>Instructions for building the programs are given in
-<samp>mdash-x.y.z/README.md</samp>.
+<samp>mdash-x.y.z/INSTALL.md</samp>.
 </p>
-<a name="Documentation"></a>
-<h3 class="section">4.3 Documentation</h3>
+<span id="Documentation"></span><h3 class="section">4.3 Documentation</h3>
 
 <p>The files <samp>mdash.html</samp>, <samp>mdash.pdf</samp> and <samp>mdash.info</samp> in
 the directory <samp>mdash-x.y.z/src/dash</samp> contain documentation in the
 indicated formats.
 </p>
-<a name="Authors"></a>
-<h3 class="section">4.4 Authors</h3>
+<span id="Authors"></span><h3 class="section">4.4 Authors</h3>
 
 <p>The DASH algorithm was conceived by Dave Salt, Brian Hudson and Martyn
 Ford. Matt Ellis produced the first C++ implementation during his PhD,
@@ -849,20 +820,13 @@ and several Erasmus students (Paul Bonnel, Sylvain Lambert, Renaud
 Belloncle and Megane Bige) from IUT Belfort, France, have contributed to
 the program.
 </p>
-<a name="Contact"></a>
-<h3 class="section">4.5 Contact</h3>
+<span id="Contact"></span><h3 class="section">4.5 Contact</h3>
 
 <p>Any comments, suggestions or bug reports should be addressed to the
 current maintainer:
 </p>
 <div class="display">
-<pre class="display">Dr. David Whitley
-School of Pharmacy and Biomedical Sciences,
-University of Portsmouth,
-St Michael&rsquo;s Building,
-White Swan Road,
-Portsmouth PO1 2DT
-Email: david.whitley@port.ac.uk
+<pre class="display">Dr. David Whitley (dashsoftware@protonmail.com)
 </pre></div>
 
 <hr>

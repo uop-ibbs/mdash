@@ -1,4 +1,4 @@
-This is mdash.info, produced by makeinfo version 6.1 from mdash.texi.
+This is mdash.info, produced by makeinfo version 6.7 from mdash.texi.
 
 This manual is for MDASH, version 3.1.0.
 
@@ -618,7 +618,7 @@ The software is distributed under the terms of the GNU General Public
 License, version 3 (see the 'LICENSE' file for details), and can be
 downloaded from
 
-     <https://github.com/uop-ibbs>
+     <https://github.com/uop-ibbs/mdash>
 
 Binary packages are provided for GNU/Linux (RPM and DEB) and for
 Windows.  The source code is provided in two formats:
@@ -637,7 +637,7 @@ as appropriate to unpack the archive into a directory 'mdash-x.y.z'.
 =========================================
 
 Instructions for building the programs are given in
-'mdash-x.y.z/README.md'.
+'mdash-x.y.z/INSTALL.md'.
 
 4.3 Documentation
 =================
@@ -660,13 +660,7 @@ the program.
 Any comments, suggestions or bug reports should be addressed to the
 current maintainer:
 
-     Dr. David Whitley
-     School of Pharmacy and Biomedical Sciences,
-     University of Portsmouth,
-     St Michael's Building,
-     White Swan Road,
-     Portsmouth PO1 2DT
-     Email: david.whitley@port.ac.uk
+     Dr. David Whitley (dashsoftware@protonmail.com)
 
 
 
@@ -678,3 +672,8 @@ Node: File Formats13285
 Node: Installation22961
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
