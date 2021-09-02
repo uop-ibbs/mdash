@@ -57,6 +57,7 @@ DashGUI::DashGUI(wxWindow* parent) : DashFBUI(parent)
 #endif
 
     update_menus(false);
+    opt_.pca = true;
     log_ = new Log(log_ctrl, wxLog::GetActiveTarget());
     wxLog::SetActiveTarget(log_);
     wxImage::AddHandler(new wxPNGHandler);

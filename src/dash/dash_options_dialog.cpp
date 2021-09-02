@@ -57,9 +57,9 @@ DashOptionsDialog::load_default_values()
     rough_ctrl->SetValue(rough_default);
     repex_chkbox->SetValue(repex_default);
     timestep_ctrl->SetValue(timestep_default);
-    pca_chkbox->SetValue(pca_default);
+    pca_chkbox->SetValue(true);
     pca_autoscale_chkbox->SetValue(pca_autoscale_default);
-    pca_autoscale_chkbox->Enable(pca_default);
+    pca_autoscale_chkbox->Enable(true);
 }
 
 void
