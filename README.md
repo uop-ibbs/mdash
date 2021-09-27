@@ -3,7 +3,7 @@
 MDASH is a program for identifying major conformational states in
 molecular dynamics simulations, based on the distributions of key
 dihedral angles. It was developed originally in the Centre for
-Molecular Design at Portsmouth University.
+Molecular Design at the University of Portsmouth.
 
 The algorithm was first described in Salt *et al*.[1] and has been used
 recently to analyse trajectories of the cyclic peptides arginine
@@ -13,10 +13,15 @@ The software is distributed under the terms of the GNU General Public
 License (see the file [LICENSE](LICENSE) for details).
 
 The [latest release](http://github.com/uop-ibbs/mdash/releases/latest)
-is provided as compressed archives containing the source code, along
-with pre-built RPM and DEB packages for GNU/Linux and a Windows
-installer. See [INSTALL.md](INSTALL.md) for instructions on installing
-the pre-built packages and compiling the program from the source code.
+is a maintenance release to enable MDASH to be built with the latest
+versions of its third-party dependencies. There are no substantive
+changes to the software itself. Binary packages for the major
+GNU/Linux distributions are provided at the
+[openSUSE Build Service](https://software.opensuse.org/download.html?project=home/dcwhitley&package=mdash).
+A Windows installer is provided with the
+[previous release](http://github.com/uop-ibbs/mdash/releases/tag/v3.1.0).
+See [INSTALL.md](INSTALL.md) for further details and instructions on
+compiling the program from the source code.
 
 ### A change of name
 

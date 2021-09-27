@@ -1,10 +1,30 @@
-MDASH, Release 3.1.0, December 2017.
+MDASH, Release 3.1.1, September 2021.
 ====================================
+
+This is a maintenance release to enable MDASH to be built with the
+latest versions of its third-party dependencies. There are no
+substantive changes to the software itself.
+
+Installing Linux binary packages
+--------------------------------
+
+Binary packages are provided for current versions of the major Linux
+distributions at the [openSUSE Build
+Service](https://software.opensuse.org/download.html?project=home/dcwhitley&package=mdash).
+An AppImage, which can be installed by users without root access, is
+also provided.
+
+Installing the Windows binary package
+-------------------------------------
+
+Windows users should continue to use the installer provided with
+version 3.1.0. Simply run the file mdash-3.1.0.exe to install MDASH
+under `C:\Program Files (x86)\mdash-3.1.0`.
 
 Downloading and verifying the release files
 -------------------------------------------
 
-The latest release files are provided at
+The latest release is provided at
 [GitHub](https://github.com/uop-ibbs/mdash/releases/latest) as
 source code archives
 
@@ -12,22 +32,17 @@ source code archives
     mdash-x.y.z.tar.gz
     mdash-x.y.z.zip
 
-and binary packages
-
-    mdash-x.y.z-1.el7.x86_64.rpm (fopr RHEL7/CentOS7/ScientificLinux7)
-    mdash_x.y.z-0xenial1_amd64.deb (for Ubuntu16.04)
-    mdash-x.y.z.exe (for Windows10)
-
 The file `SHA256SUMS` contains the SHA256 checksums for each file.
 
-The files are signed with the
-[GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc)
-with fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.
+The archives are signed with the
+[GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey2.asc)
+with primary key fingerprint 96AB F6CF 3930 C28A 2814 76B7 0422 9F49 21A6 6DE4
+and subkey fingerprint 5048 5F1B 6AA9 1C89 DACA A97A 9C63 1370 82B1 05E5.
 The signatures are in the files with .asc extensions.
 
 To verify a signature, first import the public key:
 
-    gpg --import https://github.com/uop-ibbs/mdash/master/pubkey.asc
+    gpg --import https://github.com/uop-ibbs/mdash/master/pubkey2.asc
 
 then use the command:
 
@@ -36,22 +51,19 @@ then use the command:
 replacing the name of the file as appropriate. If all is well this
 should produce output along the lines of:
 
-[TODO]
+    gpg: Signature made Fri 17 Sep 2021 14:50:00 BST
+    gpg:                using RSA key 50485F1B6AA91C89DACAA97A9C63137082B105E5
+    gpg: Good signature from "David Whitley (Github Signing Key) <31848565+dcwhitley@users.noreply.github.com>" [unknown]
+    gpg: WARNING: This key is not certified with a trusted signature!
+    gpg:          There is no indication that the signature belongs to the owner.
+    Primary key fingerprint: 96AB F6CF 3930 C28A 2814  76B7 0422 9F49 21A6 6DE4
+         Subkey fingerprint: 5048 5F1B 6AA9 1C89 DACA  A97A 9C63 1370 82B1 05E5
+
 The warning is expected and can be ignored.
 
-
-Installing binary packages
---------------------------
-
-To install a GNU/Linux binary package use the appropriate command
-
-    sudo rpm -ihv mdash-x.y.z-1.el7.x86_64.rpm
-    sudo dpkg -i mdash_x.y.z-0xenial1_amd64.deb
-
-On Windows simply run mdash-x.y.z.exe.
-
-The binary packages install under `/usr` on GNU/Linux and `C:\Program
-Files (x86)\mdash-x.y.z on Windows.
+(Note that the earlier version 3.1.0 release files were signed the [GPG
+public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc) with
+fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.)
 
 
 Extracting the source code
@@ -59,7 +71,7 @@ Extracting the source code
 
 Use one of the commands
 
-    tar xjf mdash-x.y.z.tar.bz2
+    tar xf mdash-x.y.z.tar.bz2
     tar xf mdash-x.y.z.tar.gz
     unzip mdash-x.y.z.zip
 
@@ -73,7 +85,7 @@ If you wish to use MDASH on Windows you are *strongly* advised to
 use the binary installer and avoid building from the source code.
 
 The simplest way to build MDASH on Windows is to use the [MSYS2
-environment](https://msys2.github.io/). This is a much-improved
+environment](https://www.msys2.org/). This is a much-improved
 successor to Cygwin and the various versions of MinGW, and is highly
 recommended. See the [Distribution-specific notes](#user-content-distribution-specific-notes)
 for details on setting up MSYS2 and installing the prerequisites, then
@@ -94,42 +106,23 @@ distributions.
 ### [Boost](<http://www.boost.org>)
 
 In addition to the Boost headers, the Boost program-options,
-filesystem, system, regex and iostreams libraries are required.
-
-RHEL-7.x: boost-devel, boost-program-options, boost-filesystem,
-          boost-system, boost-regex, boost-iostreams
-
-Ubuntu-16.04: libboost-dev, libboost-program-options-dev,
-              libboost-filesystem-dev, libboost-system-dev,
-              libboost-regex-dev, libboost-iostreams-dev
-
-OpenSUSE-42.3: boost-devel, libboost_program_options,
-               libboost_filesystem, libboost_system,
-               libboost_regex, libboost_iostreams
-
-MSYS2: mingw-w64-x86_64-boost
-
+filesystem and iostreams libraries are required.
 
 The GNU/Linux build includes an interface to read trajectories
-generated by [AMBER](http://ambermd.org). This requires version 1.64 of
-the Boost libraries, released April 2017. This is not yet available
-via the package managers, so must be installed manually following the
-instructions on the Boost website. Only the required libraries
-(program-options, filesystem, system, regex and iostreams) need to be
-compiled. The AMBER interface can be disabled by using the
+generated by [AMBER](http://ambermd.org). This requires version 1.64
+of the Boost libraries, released April 2017. If this is not yet
+available via your package manager, it must be installed manually
+following the instructions on the Boost website. Only the required
+libraries (program-options, filesystem and iostreams) need to be
+compiled, though others may be included by the build process as
+dependencies. The AMBER interface can be disabled by using the
 '--disable-amber' configure option, in which case an earlier version
 of the Boost libraries will suffice.
 
 
 ### [Eigen](<http://eigen.tuxfamily.org>)
 
-RHEL-7.x: eigen3-devel
-
-Ubuntu-16.04: libeigen3-dev
-
-OpenSUSE-42.3: eigen3-devel
-
-MSYS2: mingw-w64-x86_64-eigen3
+Eigen is used to calculate principal components.
 
 
 ### Compression and image libraries (zlib, bzip2, png)
@@ -137,14 +130,6 @@ MSYS2: mingw-w64-x86_64-eigen3
 The zlib, bzip2, and png development packages are required to deal
 with compressed input files and to save images from the GUI in PNG
 format.
-
-RHEL-7.x: zlib-devel, bzip2-devel, libpng-devel
-
-Ubuntu-16.04: libbz2-dev, zlib1g-dev, libpng12-dev
-
-OpenSUSE-42.3: libbz2-devel
-
-MSYS2: mingw-w64-x86_64-bzip2
 
 
 ### OpenGL (GL, GLU, GLEW, GLM)
@@ -160,14 +145,6 @@ GLEW, the OpenGL Extension Wrangler Library, is available from
 GLM, the OpenGL Maths Library, is a header-only library available from
 <http://glm.g-truc.net>.
 
-RHEL-7.x: mesa-libGL-devel, mesa-libGLU-devel, glew-devel, glm-devel
-
-Ubuntu-16.04: libgl1-mesa-dev, libglu1-mesa-dev, libglew-dev, libglm-dev
-
-OpenSUSE-42.3: Mesa-libGL-devel, glu-devel, glew-devel, glm-devel
-
-MSYS2: mingw-w64-x86_64-glew, mingw-w64-x86_64-glm
-
 
 ### [wxWidgets](<http://www.wxwidgets.org>)
 
@@ -175,14 +152,9 @@ The wxWidgets toolkit is required for the graphical version of
 MDASH. It is not required for the command-line version of MDASH, which
 is built by using the `--disable-gui` configure option.
 
-RHEL-7.x: wxGTK3, wxGTK3-devel, wxGTK3-gl
-  (from the EPEL repository, http://fedoraproject.org/wiki/EPEL - see Distribution-specific notes)
-
-Ubuntu-16.04: wx-common, wx3.0-headers, libwxbase3.0-0, libwxbase3.0-dev, libwxgtk3.0-0, libwxgtk3.0-dev
-
-OpenSUSE-42.3: wxGTK3-3_0-devel
-
-MSYS2: mingw-w64-x86_64-wxWidgets
+For RHEL-8.x, due to the use of Wayland rather than X11, a recent
+development version of wxWidgets (>= 3.1.5) is required, which must be
+built from source.
 
 If wxWidgets is built from source, ensure that OpenGL support is
 included (use the `--with-opengl` option when configuring wxWidgets).
@@ -194,6 +166,46 @@ A (mildly) modified version of wxFreeChart is provided in the
 `mdash-x.y.z/src/wxfreechart` directory. This code is distributed
 under the wxWindows Library Licence, Version 3.1 (GPLv2+ with
 an exception allowing static linking).
+
+
+### Installing the prerequisites
+
+The following commands can be used to install the prerequisites.
+
+RHEL-8.x:
+
+(Enable the Power Tools and EPEL repositories.)
+
+    sudo dnf install boost169-devel boost169-program-options \
+        boost169-filesystem boost169-iostreams eigen3-devel zlib-devel \
+        bzip2-devel libpng-devel mesa-libGL-devel mesa-libGLU-devel \
+        glew-devel glm-devel
+
+
+RHEL-7.x:
+
+(Enable the EPEL repository.)
+
+    sudo yum install boost169-devel boost169-program-options
+        boost169-filesystem boost169-iostreams eigen3-devel zlib-devel \
+        bzip2-devel libpng-devel mesa-libGL-devel mesa-libGLU-devel \
+        glew-devel glm-devel wxGTK3 wxGTK3-devel wxGTK3-gl
+
+
+Ubuntu-20.04:
+
+    sudo apt install libboost-dev libboost-program-options-dev \
+        libboost-filesystem-dev libboost-iostreams-dev libeigen3-dev \
+        libbz2-dev zlib1g-dev libpng-dev libgl1-mesa-dev \
+        libglu1-mesa-dev libglew-dev libglm-dev libwxgtk3.0-gtk3-dev
+
+
+OpenSUSE Leap 15.x:
+
+    sudo zypper install boost-devel libboost_program_options-devel \
+        libboost_filesystem-devel libboost_iostreams-devel eigen3-devel \
+        libbz2-devel Mesa-libGL-devel glu-devel glew-devel glm-devel \
+        wxWidgets-3_0-devel
 
 
 Building MDASH on GNU/Linux
@@ -238,7 +250,10 @@ can be run in-place or moved to somewhere more convenient. The files
 `mdash-x.y.z/src/mdash` contain documentation in the indicated
 formats.
 
-`make check` runs some rudimentary test cases.
+`make check` runs some rudimentary test cases. Depending on the
+version of Eigen3, some of the checks may fail with differences in the
+signs of the principal components. As the PCs are only defined up to a
+change of sign, these may be ignored.
 
 `make install` is optional. It copies the programs `mdash` and
 `amberdash` to `PREFIX/bin`, the pdf and html manuals to
@@ -270,11 +285,10 @@ Aspects of the build are controlled by the following variables
     BUILD_GUI[=ON]
     BUILD_AMBER[=ON]
     BOOST_ROOT        boost installation directory
-    EIGEN3_INCLUDE    directory containing Eigen/Core
 
 For example:
 
-    cmake -DBUILD_GUI=OFF -DBOOST_ROOT=/opt/modules/boost/1.64.0 ..
+    cmake -DBUILD_GUI=OFF -DBOOST_ROOT=/opt/modules/boost/1.76.0 ..
 
 
 Building on Windows with Visual Studio
@@ -296,25 +310,34 @@ From the [Boost home page](www.boost.org) select `More Downloads` then
 follow the `Windows Binaries` link. From `DEPENDENCY_VERSIONS.txt`
 match your version of Visual Studio to an msvc version. Then download
 the 32-bit version of the corresponding Boost libraries. For Visual
-Studio 2017, for example, use `Boost_1_65_1_msvc_14.1-32.exe`. Run the
+Studio 2019, for example, use `Boost_1_76_0_msvc_14.2-32.exe`. Run the
 .exe and install the libraries in MDASHREQ.
 
 ### wxWidgets
 
-Download the source code for the latest development release (3.1.0)
+Download the source code for the latest development release (3.1.5)
 from the wxWidgets [downloads](https://wxwidgets.org/downloads/)
 page. Choose the .zip or .7z archive and uncompress it in MDASHREQ.
 
 Open the Visual Studio x86 Native Tools Command Prompt and run these commands:
 
-    cd MDASHREQ\wxWidgets-3.1.0\build\msw
+    cd MDASHREQ\wxWidgets-3.1.5\build\msw
     nmake /f makefile.vc BUILD=release
 
 ### Eigen
 
-From the [Eigen home page](<http://eigen.tuxfamily.org>) download the
-.zip file for the latest stable release (3.3.4) and unpack it in
-MDASHREQ.
+Although Eigen is a header-only library, the package must be 'built'
+to generate the build files that CMake requires. From the [Eigen home
+page](<http://eigen.tuxfamily.org>) download the .zip file for the
+latest stable release (3.4.0) and unpack it somewhere other than
+MDASHREQ. Open the Visual Studio Native Tools Command Prompt and use
+the following commands:
+
+    cd path\to\eigen-3.4.0
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=MDASHREQ\Eigen3 ..
+    cmake --build . --target install
 
 ### GLEW
 
@@ -326,19 +349,17 @@ version (glew-2.1.0-win32.zip). Unpack the .zip file in MDASHREQ.
 
 From the [GLM home page](https://glm.g-truc.net) select `Downloads`
 from the left-hand menu and download the .zip file for the latest
-stable release (glm-0.9.8.5.zip). Unpack the .zip file in MDASHREQ.
+stable release (glm-0.9.9.8.zip). Unpack the .zip file in MDASHREQ.
 
 
 The result should be a folder containing these subfolders (version
 numbers may vary):
 
-[TODO: check]
-    wxWidgets-3.1.0
-    boost-1.65.1
-    Eigen-3.3.4
+    wxWidgets-3.1.5
+    boost-1_76_0
+    Eigen3
     glew-2.1.0
-    glm-0.9.8.5
-
+    glm-0.9.9.8
 
 ### CMake
 
@@ -372,7 +393,8 @@ With the prerequisites in place, the actual build is straightforward.
            nmake
            nmake install
 
-       The final install step is optional. The mdash.exe program is built in [TODO]???? and may be moved to somewhere more convenient.
+       The final install step is optional. The executable build\src\dash\mdash.exe
+       may simply be moved to somewhere more convenient.
 
 
 Distribution-specific notes
@@ -404,43 +426,32 @@ where `path-to-eigen` is the parent of the directory named `Eigen`.
 ### MSYS2
 
 Follow the instructions at https://msys2.github.io/ to install and
-update MSYS2. Then use the following command in the MSYS2 shell to
-install the build tools and prerequisites:
+update MSYS2 and to install the base development packages and the GCC
+toolchain. Then use the following command in the MSYS2 shell to
+install the prerequisites for MDASH:
 
-    pacman -S make tar pkg-config diffutils \
-              mingw-w64-x86_64-gcc \
-              mingw-w64-x86_64-boost \
+    pacman -S mingw-w64-x86_64-boost \
               mingw-w64-x86_64-eigen3 \
-              mingw-w64-x86_64-wxWidgets \
+              mingw-w64-x86_64-wxWidgets3.1 \
               mingw-w64-x86_64-glew \
               mingw-w64-x86_64-glm
-
-In MSYS2 version 20160921 a bug causes the pacman command to fail with
-an error "/mingw64 exists in filesystem", although the directory
-/mingw64 doesn't in fact exist. The workaround is to create the
-directory /mingw64 manually:
-
-    mkdir /mingw64
-
-then re-run the pacman command.
 
 To build MDASH, open an MSYS2 MinGW64 shell and follow the
 instructions above for installing on GNU/Linux, specifying the
 location of the boost libraries and disabling the AMBER interface in
 the configuration step:
 
-    ../configure --prefix=/usr/local --with-boost=/mingw64 --disable-amber
+    ../configure --prefix=/usr/local --with-wx-config=wx-config-3.1 --with-boost=/mingw64 --disable-amber
 
 The --prefix option is included here because the default installation
 prefix on MSYS2 is /mingw64.
 
-The version of GCC provided with MSYS2 is rather recent and produces
-copious warnings, mainly about deprecated features in the Eigen and
-Boost libraries. These can be ignored. To reduce the noise, use
-
-    CXXFLAGS="-Wno-deprecated-declarations -Wno-ignored-attributes" ../configure <configure-options>
-
-in the configuration step.
+The (optional) make check command will fail as the output files
+(mdash-3.1.1/build/test/\*.out) will have DOS line endings, whereas
+the expected output files (mdash-3.1.1/test/\*.exp) have Unix line
+endings. Either inspect the files visually for real differences or
+convert the output files with dos2unix and run diff by hand on the
+corresponding pairs of files to check them.
 
 The resulting mdash executable is a native Windows program, which can
 be run from the MSYS2 MinGW64 shell. It can also be run directly from
