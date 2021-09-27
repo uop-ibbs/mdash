@@ -2,6 +2,10 @@
 
 cmake_minimum_required(VERSION 3.1.0)
 
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21.2")
+    cmake_policy(SET CMP0074 NEW)
+endif()
+
 project(MDash VERSION 3.2.0 LANGUAGES CXX C)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)

@@ -9,16 +9,7 @@ set(sources
 
 add_library(cmdlib ${sources})
 
-include(FindPkgConfig OPTIONAL RESULT_VARIABLE PkgConfig)
-
-if (NOT PkgConfig-NOTFOUND)
-    pkg_check_modules(EIGEN3 eigen3)
-    include_directories(${EIGEN3_INCLUDE_DIRS})
-endif()
-
-if (NOT EIGEN3_FOUND)
-    find_package(Eigen3 REQUIRED)
-    include_directories(${EIGEN3_INCLUDE_DIR})
-endif()
+find_package(Eigen3 REQUIRED NO_MODULE)
+target_link_libraries(cmdlib Eigen3::Eigen)
 
 include_directories(..)

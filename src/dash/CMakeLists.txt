@@ -65,6 +65,7 @@ option(GLEW_STATIC "Link to static GLEW library" OFF)
 
 if (GLEW_STATIC)
     add_definitions(-DGLEW_STATIC)
+	set(GLEW_USE_STATIC_LIBS ON)
 endif()
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -114,7 +115,7 @@ include_directories(..)
 target_link_libraries(mdash cmdlib)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem iostreams bzip2 zlib)
+    find_package(Boost ${DASH_BOOST_VERSION} REQUIRED COMPONENTS program_options filesystem iostreams bzip2 zlib)
 else()
     find_package(Boost ${DASH_BOOST_VERSION} REQUIRED program_options filesystem iostreams)
 endif()
@@ -126,17 +127,8 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND Boost_USE_STATIC_LIBS)
     target_link_libraries(mdash bz2 z)
 endif()
 
-include(FindPkgConfig OPTIONAL RESULT_VARIABLE PkgConfig)
-
-if (NOT PkgConfig-NOTFOUND)
-    pkg_check_modules(EIGEN3 eigen3)
-    include_directories(${EIGEN3_INCLUDE_DIRS})
-endif()
-
-if (NOT EIGEN3_FOUND)
-    find_package(Eigen3 REQUIRED)
-    include_directories(${EIGEN3_INCLUDE_DIR})
-endif()
+find_package(Eigen3 REQUIRED NO_MODULE)
+target_link_libraries(mdash Eigen3::Eigen)
 
 if (BUILD_GUI)
     if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
