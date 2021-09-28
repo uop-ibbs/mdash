@@ -17,7 +17,7 @@ is a maintenance release to enable MDASH to be built with the latest
 versions of its third-party dependencies. There are no substantive
 changes to the software itself. Binary packages for the major
 GNU/Linux distributions are provided at the
-[openSUSE Build Service](https://software.opensuse.org/download.html?project=home/dcwhitley&package=mdash).
+[openSUSE Build Service](https://software.opensuse.org/download.html?project=home%3Adcwhitley&package=mdash).
 A Windows installer is provided with the
 [previous release](http://github.com/uop-ibbs/mdash/releases/tag/v3.1.0).
 See [INSTALL.md](INSTALL.md) for further details and instructions on
