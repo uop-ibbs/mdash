@@ -26,10 +26,8 @@
 #include <numeric>
 #include <vector>
 
-#include <boost/math/constants/constants.hpp>
 #include <boost/math/special_functions/sign.hpp>
 
-using boost::math::double_constants::pi;
 using boost::math::sign;
 
 TorsionData::TorsionData(int idx, const dVector& data, const DashOptions& opt) {
