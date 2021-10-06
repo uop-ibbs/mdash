@@ -40,14 +40,14 @@ and an AppImage
 The file `SHA256SUMS` contains the SHA256 checksums for each file.
 
 The release files are signed with the
-[GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey2.asc)
+[GPG public key](https://raw.githubusercontent.com/uop-ibbs/mdash/master/pubkey2.asc)
 with primary key fingerprint 96AB F6CF 3930 C28A 2814 76B7 0422 9F49 21A6 6DE4
 and subkey fingerprint 5048 5F1B 6AA9 1C89 DACA A97A 9C63 1370 82B1 05E5.
 The signatures are in the files with .asc extensions.
 
 To verify a signature, first import the public key:
 
-    gpg --import https://github.com/uop-ibbs/mdash/master/pubkey2.asc
+    gpg --import pubkey2.asc
 
 then use the command:
 
@@ -66,8 +66,8 @@ should produce output along the lines of:
 
 The warning is expected and can be ignored.
 
-(Note that the earlier version 3.1.0 release files were signed the [GPG
-public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc) with
+(Note that the earlier version 3.1.0 release files were signed with the [GPG
+public key](https://raw.githubusercontent.com/uop-ibbs/mdash/master/pubkey.asc) with
 fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.)
 
 
