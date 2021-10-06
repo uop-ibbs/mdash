@@ -10,7 +10,7 @@ Installing Linux binary packages
 
 Binary packages are provided for current versions of the major Linux
 distributions at the [openSUSE Build
-Service](https://software.opensuse.org/download.html?project=home/dcwhitley&package=mdash).
+Service](https://software.opensuse.org/download.html?project=home%3Adcwhitley&package=mdash).
 Follow the instructions given there to install the appropriate
 package. The CentOS packages should work on other RHEL-based systems
 (RHEL, Rocky, Alma) and the xUbuntu packages on other Ubuntu-based
