@@ -1,5 +1,5 @@
-MDASH, Release 3.1.1, September 2021.
-====================================
+MDASH, Release 3.1.1, October 2021.
+===================================
 
 This is a maintenance release to enable MDASH to be built with the
 latest versions of its third-party dependencies. There are no
@@ -11,8 +11,10 @@ Installing Linux binary packages
 Binary packages are provided for current versions of the major Linux
 distributions at the [openSUSE Build
 Service](https://software.opensuse.org/download.html?project=home/dcwhitley&package=mdash).
-An AppImage, which can be installed by users without root access, is
-also provided.
+Follow the instructions given there to install the appropriate
+package. The CentOS packages should work on other RHEL-based systems
+(RHEL, Rocky, Alma) and the xUbuntu packages on other Ubuntu-based
+systems (e.g. Mint).
 
 Installing the Windows binary package
 -------------------------------------
@@ -28,13 +30,16 @@ The latest release is provided at
 [GitHub](https://github.com/uop-ibbs/mdash/releases/latest) as
 source code archives
 
-    mdash-x.y.z.tar.bz2
-    mdash-x.y.z.tar.gz
-    mdash-x.y.z.zip
+    mdash-3.1.1.tar.bz2
+    mdash-3.1.1.zip
+
+and an AppImage
+
+    mdash-3.1.1-x86_64.AppImage
 
 The file `SHA256SUMS` contains the SHA256 checksums for each file.
 
-The archives are signed with the
+The release files are signed with the
 [GPG public key](https://github.com/uop-ibbs/mdash/master/pubkey2.asc)
 with primary key fingerprint 96AB F6CF 3930 C28A 2814 76B7 0422 9F49 21A6 6DE4
 and subkey fingerprint 5048 5F1B 6AA9 1C89 DACA A97A 9C63 1370 82B1 05E5.
@@ -66,13 +71,52 @@ public key](https://github.com/uop-ibbs/mdash/master/pubkey.asc) with
 fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.)
 
 
+Using the Linux AppImage
+------------------------
+
+The AppImage, which can be used by users without root access, requires
+no installation. Simply move it somewhere convenient, make it
+executable and run it.
+
+    chmod +x mdash-3.1.1-x86_64.AppImage
+    ./mdash-3.1.1-x86_64.AppImage
+
+Command line arguments for MDASH should be supplied directly to the
+AppImage. So a good starting point is
+
+    ./mdash-3.1.1-x86_64.AppImage --help
+
+The AppImage is a first attempt, and somewhat experimental, but there
+is a fair chance it will run on any GNU/Linux system with glibc
+version 2.26 or later (it was built on openSUSE Leap 15.1). It will
+almost certainly produce copious GTK warnings, which may be
+ignored. (If the warnings prove too irritating, redirect stderr by
+appending 2>/dev/null to the command line; but be aware that mdash
+does write error messages on stderr, so redirect to a real file to
+catch these.)
+
+The AppImage includes the documentation and examples. To access these,
+mount the AppImage:
+
+    ./mdash-3.1.1-x86_64.AppImage --appimage-mount
+
+The location of the temporary mount point is printed in the
+terminal. Copy the required files from there to a permanent
+location. The examples, html and pdf documentation are under
+
+    /mount_point/usr/share/doc/mdash
+
+There is also an info file and a man page:
+
+    /mount_point/usr/share/info/mdash.info
+    /mount_point/usr/share/man/man1/mdash.1
+
 Extracting the source code
 --------------------------
 
 Use one of the commands
 
     tar xf mdash-x.y.z.tar.bz2
-    tar xf mdash-x.y.z.tar.gz
     unzip mdash-x.y.z.zip
 
 to unpack the archive into a directory `mdash-x.y.z`.
@@ -122,7 +166,8 @@ of the Boost libraries will suffice.
 
 ### [Eigen](<http://eigen.tuxfamily.org>)
 
-Eigen is used to calculate principal components.
+The Eigen linear algebra library is used to calculate principal
+components.
 
 
 ### Compression and image libraries (zlib, bzip2, png)
@@ -186,10 +231,10 @@ RHEL-7.x:
 
 (Enable the EPEL repository.)
 
-    sudo yum install boost169-devel boost169-program-options
-        boost169-filesystem boost169-iostreams eigen3-devel zlib-devel \
-        bzip2-devel libpng-devel mesa-libGL-devel mesa-libGLU-devel \
-        glew-devel glm-devel wxGTK3 wxGTK3-devel wxGTK3-gl
+    sudo yum install boost169-devel boost169-program-options \
+            boost169-filesystem boost169-iostreams eigen3-devel zlib-devel \
+            bzip2-devel libpng-devel mesa-libGL-devel mesa-libGLU-devel \
+            glew-devel glm-devel wxGTK3 wxGTK3-devel wxGTK3-gl
 
 
 Ubuntu-20.04:
