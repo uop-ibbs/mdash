@@ -40,6 +40,9 @@ Dash::Dash(const Trajectory& t, const DashOptions& o) : trj(t), opt(o)
     dummy_state_set.insert(dummy_state);
     StateData dummy_state_data;
     dummy_state_data.index = 0;
+    dummy_state_data.freq = 0;
+    dummy_state_data.frame = 0;
+    dummy_state_data.rmsd = 0;
     RepexState dummy_repex_state(dummy_state_set.begin(), dummy_state_data);
     dummy_repex_state_set.push_back(&dummy_repex_state);
 
