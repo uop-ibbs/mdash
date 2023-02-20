@@ -57,7 +57,12 @@ PlotCanvas3D::init_gl()
     SetCurrent(*context_);
     GLenum err = glewInit();
 
+#ifdef GLEW_ERROR_NO_GLX_DISPLAY
+    // on wayland systems glew_init may return GLEW_ERROR_NO_GLX_DISPLAY (introduced in glew 2.1.0)
+    if (err != GLEW_OK && err != GLEW_ERROR_NO_GLX_DISPLAY) {
+#else
     if (err != GLEW_OK) {
+#endif
         std::ostringstream os;
         os << "glewInit failed (err=" << err << ") : " << glewGetErrorString(err);
         wxLogError(wxString(os.str()));
