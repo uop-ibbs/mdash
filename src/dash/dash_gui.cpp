@@ -67,6 +67,11 @@ DashGUI::DashGUI(wxWindow* parent) : DashFBUI(parent)
 void
 DashGUI::check_opengl()
 {
+#if wxCHECK_VERSION(3, 1, 0)
+    wxGLAttributes dispAttrs;
+    dispAttrs.PlatformDefaults().Defaults().EndList();
+    opengl_support_ = wxGLCanvas::IsDisplaySupported(dispAttrs);
+#else
     int attr_rgba[] = {WX_GL_RGBA, 0};
     int attr_dble[] = {WX_GL_DOUBLEBUFFER, 0};
     int attr_smbf[] = {WX_GL_SAMPLE_BUFFERS, GL_TRUE, 0};
@@ -101,6 +106,7 @@ DashGUI::check_opengl()
                   0};
 
     opengl_support_ = wxGLCanvas::IsDisplaySupported(attr);
+#endif
 
     if (!opengl_support_) {
         wxLogMessage("Warning: OpenGL display not supported, PCA plots disabled.");
