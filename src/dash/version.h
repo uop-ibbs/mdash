@@ -18,7 +18,7 @@
 
 #include <string>
 
-const std::string version = "3.1.1";
+const std::string version = "3.1.2";
 const std::string dash_version = "mdash " + version;
 
 const std::string copyright =

@@ -3,7 +3,7 @@
 # Process this file with "autoconf -I/usr/share/aclocal" to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([mdash],[3.1.1])
+AC_INIT([mdash],[3.1.2])
 AC_CONFIG_SRCDIR([src/dash/main.cpp])
 
 AC_LANG(C++)
@@ -25,8 +25,10 @@ AX_CHECK_PREPROC_FLAG([-MM], [DEPFLAGS="-MM"], [DEPFLAGS="-M"])
 
 m4_include([ax_require_defined.m4])
 m4_include([ax_append_flag.m4])
+m4_include([ax_prepend_flag.m4])
 m4_include([ax_cflags_warn_all.m4])
 m4_include([ax_check_compile_flag.m4])
+m4_include([ax_compiler_vendor.m4])
 
 AX_CHECK_COMPILE_FLAG([-std=c++14], [CXX_STD="-std=c++14"])
 
@@ -126,7 +128,7 @@ AC_ARG_WITH(eigen_include, AS_HELP_STRING([--with-eigen-include=PATH], [location
 
 dnl Check user-supplied location if given, otherwise check pkg-config location
 if test "x$with_eigen_include" != "x"; then
-    AC_CHECK_HEADERS([$with_eigen_include/Eigen/Core],[have_eigen3=yes],[have_eigen3=no])
+    AC_CHECK_HEADER([$with_eigen_include/Eigen/Core],[have_eigen3=yes],[have_eigen3=no])
 
     if test "x$have_eigen3" = "xyes"; then
         EIGEN_INCLUDES="-I$with_eigen_include"
