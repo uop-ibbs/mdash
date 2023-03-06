@@ -237,7 +237,7 @@ install-program: $(PROGRAM) $(srcdir)/$(AMBERDASH)
 	$(MKDIR_P) $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) $^ $(DESTDIR)$(bindir)
 
-install-doc: $(top_srcdir)/README.md $(top_srcdir)/INSTALL.md $(top_srcdir)/LICENSE $(srcdir)/mdash.pdf $(srcdir)/mdash.html
+install-doc: $(top_srcdir)/README.md $(top_srcdir)/LICENSE $(srcdir)/mdash.pdf $(srcdir)/mdash.html
 	$(MKDIR_P) $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) $^ $(DESTDIR)$(docdir)
 
