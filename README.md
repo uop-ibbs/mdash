@@ -15,12 +15,12 @@ License (see the file [LICENSE](LICENSE) for details).
 The [latest release](http://github.com/uop-ibbs/mdash/releases/latest)
 is a maintenance release to enable MDASH to be built with the latest
 versions of its third-party dependencies. There are no substantive
-changes to the software itself. Binary packages for the major
-GNU/Linux distributions are provided at the
-[openSUSE Build Service](https://software.opensuse.org/download.html?project=home%3Adcwhitley&package=mdash).
-A Windows installer is provided with the
-[previous release](http://github.com/uop-ibbs/mdash/releases/tag/v3.1.0).
-See [INSTALL.md](INSTALL.md) for further details and instructions on
+changes to the software itself. This release includes a flatpak binary
+for GNU/Linux and a Windows installer. Release 3.1.2 will be the final
+numbered release. The code is now strictly in maintenance mode and any
+further changes will be restricted to ensuring the source code
+continues to build on the major operating systems. See
+[INSTALL.md](INSTALL.md) for further details and instructions on
 compiling the program from the source code.
 
 ### A change of name

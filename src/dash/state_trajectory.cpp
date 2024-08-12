@@ -392,7 +392,7 @@ StateTrajectory::write_bout_times(std::ostream& os) const
 
     for (state_map::const_iterator i=states.begin(); i!=states.end(); ++i,++j) {
         std::vector<int> times(i->second.bouts);
-        std::transform(times.begin(), times.end(), times.begin(), std::bind(std::multiplies<int>(), std::placeholders::_1,timestep));
+        std::transform(times.begin(), times.end(), times.begin(), std::bind(std::multiplies<int>(), std::placeholders::_1, timestep));
         os << j << '\t';
         write_vector(times, os, ' ');
         os << '\n';

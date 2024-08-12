@@ -1,27 +1,11 @@
-MDASH, Release 3.1.1, October 2021.
+MDASH, Release 3.1.2, August 2024.
 ===================================
 
 This is a maintenance release to enable MDASH to be built with the
 latest versions of its third-party dependencies. There are no
-substantive changes to the software itself.
+substantive changes to the software itself. This will be the final
+numbered release. Future changes will be made only to the source code.
 
-Installing Linux binary packages
---------------------------------
-
-Binary packages are provided for current versions of the major Linux
-distributions at the [openSUSE Build
-Service](https://software.opensuse.org/download.html?project=home%3Adcwhitley&package=mdash).
-Follow the instructions given there to install the appropriate
-package. The CentOS packages should work on other RHEL-based systems
-(RHEL, Rocky, Alma) and the xUbuntu packages on other Ubuntu-based
-systems (e.g. Mint).
-
-Installing the Windows binary package
--------------------------------------
-
-Windows users should continue to use the installer provided with
-version 3.1.0. Simply run the file mdash-3.1.0.exe to install MDASH
-under `C:\Program Files (x86)\mdash-3.1.0`.
 
 Downloading and verifying the release files
 -------------------------------------------
@@ -30,14 +14,21 @@ The latest release is provided at
 [GitHub](https://github.com/uop-ibbs/mdash/releases/latest) as
 source code archives
 
-    mdash-3.1.1.tar.bz2
-    mdash-3.1.1.zip
+    mdash-3.1.2.tar.bz2
+    mdash-3.1.2.zip
 
-and an AppImage
+a Flatpak
 
-    mdash-3.1.1-x86_64.AppImage
+    mdash-3.1.2.flatpak
 
-The file `SHA256SUMS` contains the SHA256 checksums for each file.
+and a Windows installer
+
+    mdash-3.1.2.exe
+
+The file `SHA512SUMS` contains the SHA512 checksum for each file. To
+verify the checksums use the command
+
+    sha512sum -c SHA512SUMS --ignore-missing
 
 The release files are signed with the
 [GPG public key](https://raw.githubusercontent.com/uop-ibbs/mdash/master/pubkey2.asc)
@@ -71,45 +62,31 @@ public key](https://raw.githubusercontent.com/uop-ibbs/mdash/master/pubkey.asc) 
 fingerprint 0C66 53A8 6507 A92D CD07 B878 BBD9 D1DB 4E10 D89E.)
 
 
-Using the Linux AppImage
-------------------------
+Installing the Linux Flatpak binary
+-----------------------------------
 
-The AppImage, which can be used by users without root access, requires
-no installation. Simply move it somewhere convenient, make it
-executable and run it.
+First ensure that Flatpak is installed from your system's software
+manager (check that the `flatpak` command is present - some
+distributions install it by default, some don't). Instructions for
+each Linux distribution are provided at
+[Flatpak](https://flatpak.org/setup/).
 
-    chmod +x mdash-3.1.1-x86_64.AppImage
-    ./mdash-3.1.1-x86_64.AppImage
+To install the MDASH Flatpak use the command:
 
-Command line arguments for MDASH should be supplied directly to the
-AppImage. So a good starting point is
+    flatpak install mdash-3.1.2.flatpak
 
-    ./mdash-3.1.1-x86_64.AppImage --help
+This should place an MDASH icon among your system's applications which
+will launch the MDASH gui. Alternatively, use the command:
 
-The AppImage is a first attempt, and somewhat experimental, but there
-is a fair chance it will run on any GNU/Linux system with glibc
-version 2.26 or later (it was built on openSUSE Leap 15.1). It will
-almost certainly produce copious GTK warnings, which may be
-ignored. (If the warnings prove too irritating, redirect stderr by
-appending 2>/dev/null to the command line; but be aware that mdash
-does write error messages on stderr, so redirect to a real file to
-catch these.)
+    flatpak run io.github.uop_ibbs.Mdash [mdash options]
 
-The AppImage includes the documentation and examples. To access these,
-mount the AppImage:
 
-    ./mdash-3.1.1-x86_64.AppImage --appimage-mount
+Installing the Windows binary package
+-------------------------------------
 
-The location of the temporary mount point is printed in the
-terminal. Copy the required files from there to a permanent
-location. The examples, html and pdf documentation are under
+Windows users should run the file mdash-3.1.2.exe to install MDASH
+under `C:\Program Files (x86)\mdash-3.1.2`.
 
-    /mount_point/usr/share/doc/mdash
-
-There is also an info file and a man page:
-
-    /mount_point/usr/share/info/mdash.info
-    /mount_point/usr/share/man/man1/mdash.1
 
 Extracting the source code
 --------------------------
@@ -177,7 +154,7 @@ with compressed input files and to save images from the GUI in PNG
 format.
 
 
-### OpenGL (GL, GLU, GLEW, GLM)
+### OpenGL (GL, GLEW, GLM)
 
 OpenGL is required for the display of principal components in the
 graphical version of MDASH. It is not required for the command-line
@@ -197,9 +174,17 @@ The wxWidgets toolkit is required for the graphical version of
 MDASH. It is not required for the command-line version of MDASH, which
 is built by using the `--disable-gui` configure option.
 
-For RHEL-8.x, due to the use of Wayland rather than X11, a recent
-development version of wxWidgets (>= 3.1.5) is required, which must be
-built from source.
+There was a period during which the stable version of wxWidgets failed
+to keep pace with changes in the Open GL libraries and the adoption of
+Wayland in place of X11, requiring a more recent version of wxWidgets
+from the unstable branch than the stable version provided with the
+main Linux distribution was required (>= 3.1.5 at least). Older
+versions wxWidgets, particularly with Wayland caused the MDASH GUI to
+segfault on startup. In that case the latest version of wxWidgets
+should be built from source. A workaround for RHEL is suggested in the
+[Distribution-specific
+notes](#user-content-distribution-specific-notes). Recent Linux
+distributions with wxWidgets >= 3.2.2 should be fine.
 
 If wxWidgets is built from source, ensure that OpenGL support is
 included (use the `--with-opengl` option when configuring wxWidgets).
@@ -355,19 +340,21 @@ From the [Boost home page](www.boost.org) select `More Downloads` then
 follow the `Windows Binaries` link. From `DEPENDENCY_VERSIONS.txt`
 match your version of Visual Studio to an msvc version. Then download
 the 32-bit version of the corresponding Boost libraries. For Visual
-Studio 2019, for example, use `Boost_1_76_0_msvc_14.2-32.exe`. Run the
+Studio 2022, for example, use `Boost_1_85_0_msvc_14.3-32.exe`. Run the
 .exe and install the libraries in MDASHREQ.
 
 ### wxWidgets
 
-Download the source code for the latest development release (3.1.5)
-from the wxWidgets [downloads](https://wxwidgets.org/downloads/)
-page. Choose the .zip or .7z archive and uncompress it in MDASHREQ.
+Download the source code for the latest stable release from the wxWidgets
+[downloads](https://wxwidgets.org/downloads/) page. Choose the .zip or
+.7z archive and uncompress it in MDASHREQ.
 
 Open the Visual Studio x86 Native Tools Command Prompt and run these commands:
 
-    cd MDASHREQ\wxWidgets-3.1.5\build\msw
+    cd MDASHREQ\wxWidgets-3.2.5\build\msw
     nmake /f makefile.vc BUILD=release
+
+replacing the wxWidgets version as appropriate.
 
 ### Eigen
 
@@ -388,23 +375,23 @@ the following commands:
 
 From the [GLEW home page](http://glew.sourceforge.net) follow the link
 to `Binaries: Windows 32-bit and 64-bit` to download the latest
-version (glew-2.1.0-win32.zip). Unpack the .zip file in MDASHREQ.
+version (glew-2.2.0-win32.zip). Unpack the .zip file in MDASHREQ.
 
 ### GLM
 
-From the [GLM home page](https://glm.g-truc.net) select `Downloads`
-from the left-hand menu and download the .zip file for the latest
-stable release (glm-0.9.9.8.zip). Unpack the .zip file in MDASHREQ.
+From the [GLM home page](https://github.com/g-truc/glm/releases)
+download the .zip file for the latest stable release (glm-1.0.1.zip).
+Unpack the .zip file in MDASHREQ.
 
 
 The result should be a folder containing these subfolders (version
 numbers may vary):
 
-    wxWidgets-3.1.5
-    boost-1_76_0
+    wxWidgets-3.2.5
+    boost-1_85_0
     Eigen3
-    glew-2.1.0
-    glm-0.9.9.8
+    glew-2.2.0
+    glm-1.0.1
 
 ### CMake
 
@@ -445,6 +432,17 @@ With the prerequisites in place, the actual build is straightforward.
 Distribution-specific notes
 ---------------------------
 
+### RHEL-8.x, RHEL-9.x
+
+If built against the distribution-provided version of wxWidgets the
+MDASH GUI will immediately crash with a segfault. Setting the
+environment variable
+
+    GDK_BACKEND=x11
+
+before starting MDASH will avoid this.
+
+
 ### RHEL-7.x
 
 The `wx-config` script provided in the EPEL wxWidgets 3.0.x packages
@@ -471,38 +469,43 @@ where `path-to-eigen` is the parent of the directory named `Eigen`.
 ### MSYS2
 
 Follow the instructions at https://msys2.github.io/ to install and
-update MSYS2 and to install the base development packages and the GCC
-toolchain. Then use the following command in the MSYS2 shell to
-install the prerequisites for MDASH:
+update MSYS2. Then use the following command in the MSYS2 UCRT64 shell
+to install the build tools and prerequisites for MDASH:
 
-    pacman -S mingw-w64-x86_64-boost \
-              mingw-w64-x86_64-eigen3 \
-              mingw-w64-x86_64-wxWidgets3.1 \
-              mingw-w64-x86_64-glew \
-              mingw-w64-x86_64-glm
+    pacman -S mingw-w64-ucrt-x86_64-gcc \
+			  mingw-w64-ucrt-x86_64-make \
+			  mingw-w64-ucrt-x86_64-pkgconf \
+			  mingw-w64-ucrt-x86_64-boost \
+              mingw-w64-ucrt-x86_64-eigen3 \
+              mingw-w64-ucrt-x86_64-wxWidgets3.2 \
+              mingw-w64-ucrt-x86_64-glew \
+              mingw-w64-ucrt-x86_64-glm
 
-To build MDASH, open an MSYS2 MinGW64 shell and follow the
-instructions above for installing on GNU/Linux, specifying the
-location of the boost libraries and disabling the AMBER interface in
-the configuration step:
+To build MDASH, follow the instructions above for installing on
+GNU/Linux, specifying the location of the Boost libraries and
+disabling the AMBER interface in the configuration step:
 
-    ../configure --prefix=/usr/local --with-wx-config=wx-config-3.1 --with-boost=/mingw64 --disable-amber
+    ../configure --with-boost=/ucrt64 --disable-amber
 
-The --prefix option is included here because the default installation
-prefix on MSYS2 is /mingw64.
+Use the command
+
+	mingw32-make install
+
+to compile, link and install MDASH. The default installation prefix in
+the MSYS2 UCRT64 environmant is /ucrt64, so the executable is
+installed as /ucrt64/bin/mdash.exe.
 
 The (optional) make check command will fail as the output files
-(mdash-3.1.1/build/test/\*.out) will have DOS line endings, whereas
-the expected output files (mdash-3.1.1/test/\*.exp) have Unix line
+(mdash-3.1.2/build/test/\*.out) will have DOS line endings, whereas
+the expected output files (mdash-3.1.2/test/\*.exp) have Unix line
 endings. Either inspect the files visually for real differences or
 convert the output files with dos2unix and run diff by hand on the
 corresponding pairs of files to check them.
 
 The resulting mdash executable is a native Windows program, which can
-be run from the MSYS2 MinGW64 shell. It can also be run directly from
-Windows, via 'Run' or a Command Window, provided c:\msys64\mingw64\bin
-and c:\msys64\usr\local\bin are added to the PATH environment
-variable.
+be run from the MSYS2 UCRT64 shell. It can also be run directly from
+Windows, via 'Run' or a Command Window, provided c:\msys64\ucrt64\bin
+is added to the PATH environment variable.
 
 
 Amberdash

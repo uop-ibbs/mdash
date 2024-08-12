@@ -254,7 +254,9 @@ install-man: $(srcdir)/mdash.1 $(srcdir)/amberdash.1
 
 install-data: $(srcdir)/mdash.desktop $(srcdir)/icons/mdash48.png $(srcdir)/icons/mdash128.png $(srcdir)/icons/mdash128.svg
 	$(MKDIR_P) $(DESTDIR)$(datarootdir)/applications
-	$(INSTALL_DATA) $(srcdir)/mdash.desktop $(DESTDIR)$(datarootdir)/applications/mdash.desktop
+	$(INSTALL_DATA) $(srcdir)/mdash.desktop $(DESTDIR)$(datarootdir)/applications
+	$(MKDIR_P) $(DESTDIR)$(datarootdir)/metainfo
+	$(INSTALL_DATA) $(srcdir)/mdash.metainfo.xml $(DESTDIR)$(datarootdir)/metainfo
 	$(MKDIR_P) $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps
 	$(INSTALL_DATA) $(srcdir)/icons/mdash48.png $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps/mdash.png
 	$(MKDIR_P) $(DESTDIR)$(datarootdir)/icons/hicolor/128x128/apps
@@ -284,6 +286,7 @@ uninstall-man:
 
 uninstall-data:
 	-rm -f $(DESTDIR)$(datarootdir)/applications/mdash.desktop
+	-rm -f $(DESTDIR)$(datarootdir)/metainfo/mdash.metadata.xml
 	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps/mdash.png
 	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/128x128/apps/mdash.png
 	-rm -f $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps/mdash.svg
@@ -292,7 +295,7 @@ uninstall-data:
 DIST_HEADERS = $(COMMON_HEADERS) $(GUI_HEADERS) $(AMBER_HEADERS)
 DIST_SOURCES = $(COMMON_SOURCES) $(CLI_SOURCES) $(GUI_SOURCES) $(AMBER_SOURCES) $(AMBER_GUI_SOURCES) $(AMBERDASH)
 DIST_DOCS = mdash.texi mdash.info mdash.pdf mdash.html mdash.1 amberdash.1
-DIST_EXTRA = Makefile.in CMakeLists.txt dash.fbp tiled_pager_panel.fbp mdash.desktop
+DIST_EXTRA = Makefile.in CMakeLists.txt dash.fbp tiled_pager_panel.fbp mdash.desktop mdash.metainfo.xml
 DIST_ICONS = $(addprefix $(srcdir)/icons/, mdash48.png mdash128.png mdash128.svg mdash128.xpm)
 DIST_FILES = $(addprefix $(srcdir)/, $(DIST_HEADERS) $(DIST_SOURCES) $(DIST_DOCS) $(DIST_EXTRA))
 

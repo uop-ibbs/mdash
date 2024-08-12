@@ -20,6 +20,8 @@
 #include <boost/asio.hpp>
 #include <boost/process.hpp>
 
+#include <fstream>
+#include <ostream>
 #include <string>
 #include <system_error>
 #include <vector>
